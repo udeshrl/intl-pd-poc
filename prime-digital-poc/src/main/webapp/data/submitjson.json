@@ -1,0 +1,104 @@
+{
+    "ID": 2,
+    "testID": 2,
+    "studentID": 1,
+    "ansArr": {
+        "0": [
+            null,
+            "10 : 10"
+        ],
+        "1": [
+            null,
+            {
+                "userAnswer": [
+                    "1_3",
+                    "2_2"
+                ],
+                "column_container": [
+                    "3",
+                    "2"
+                ],
+                "row_container": [
+                    "1",
+                    "2"
+                ]
+            }
+        ],
+        "2": [
+            null,
+            {
+                "answerField": [
+                    "",
+                    "",
+                    "5",
+                    "0",
+                    ".",
+                    "5"
+                ],
+                "carryField": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        ],
+        "3": [
+            null,
+            {
+                "userAnswer": [
+                    "2_2",
+                    "3_1"
+                ],
+                "column_container": [
+                    "2",
+                    "1"
+                ],
+                "row_container": [
+                    "2",
+                    "3"
+                ]
+            }
+        ],
+        "4": [
+            null,
+            "10",
+            "6"
+        ]
+    },
+    "resultArr": {
+        "0": [
+            true,
+            true
+        ],
+        "1": [
+            true,
+            false
+        ],
+        "2": [
+            true,
+            false
+        ],
+        "3": [
+            true,
+            false
+        ],
+        "4": [
+            true,
+            true,
+            true
+        ]
+    },
+    "resultQuestionObj": {
+        "0": true,
+        "1": false,
+        "2": false,
+        "3": false,
+        "4": true
+    },
+    "totalQuestion": 5,
+    "correctAns": 2,
+    "resultPercentage": 40
+}

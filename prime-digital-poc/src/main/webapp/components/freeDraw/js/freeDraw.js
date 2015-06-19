@@ -38,7 +38,7 @@ var freeDraw = (function (o) {
             o.model.on("change:left", o.left.bind(o));
             o.model.on("change:top", o.top.bind(o));
             o.model.on("change:savedDataToRedraw", o.savedDataToRedraw.bind(o));
-            o.savedDataToRedraw();
+            //o.savedDataToRedraw();
         },
         savedDataToRedraw: function () {
             var canvasEle = this.el[0].getElementsByTagName("canvas");
@@ -478,7 +478,7 @@ var freeDraw = (function (o) {
         /*This will set the user answer*/
         this.setUserAnswer = function (canvasData) {
             if (!_this.deleted) {
-                tView.model.set("savedDataToRedraw", canvasData);
+                tView.model.set("savedDataToRedraw", canvasData );
             }
             return undefined;
         };

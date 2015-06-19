@@ -261,7 +261,7 @@ var textBoxWidget = (function (o, $, Backbone, _) {
                             if (obj.type != 'Journal entry') {
                                 borderColor = 'transparent';
                             }
-                            str = '<div id="' + obj.id + '" style="position:absolute;border:2px solid ' + borderColor + ';padding:0px;">'
+                            str = '<div id="' + obj.id + '" class="textBoxWidget" style="position:absolute;border:2px solid ' + borderColor + ';padding:0px;">'
                             //+ '<input class="tbwid" type="text" style="' + styler + '"></div>';
                             if (obj.type != 'Journal entry') {
                                 str += '<input class="tbwid" type="text" style="' + styler + '">';
@@ -581,7 +581,7 @@ var textBoxWidget = (function (o, $, Backbone, _) {
         /*This will bring all the user input as each level of feedback*/
         this.getUserAnswer = function () {
             if (!tView.deleted) {
-                
+
                 return tView.model.get("userAnswer");
             }
             return undefined;
@@ -591,11 +591,12 @@ var textBoxWidget = (function (o, $, Backbone, _) {
         this.setUserAnswer = function (val) {
             if (!tView.deleted) {
                 tView.model.set("userAnswer", val);
+                tView.userAnswer();
             }
             return undefined;
         };
-        
-         /*This will reveal the answers*/
+
+        /*This will reveal the answers*/
         this.revealAnswer = function (val) {
             if (!tView.deleted) {
                 tView.revealAnswer();

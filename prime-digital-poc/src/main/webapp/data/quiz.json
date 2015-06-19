@@ -8,7 +8,11 @@
                 "sequenceNo": 3,
                 "filePath": "html_template/Question 1.htm",
                 "json": "{\"widgetsData\":{\"0\":{\"0\":{\"widgetType\":\"htmlEditor\",\"left\":0,\"top\":0,\"width\":\"978px\",\"height\":\"480px\",\"id\":\"640_Content_1431947133699\",\"editorShow\":false,\"text\":\"<h5><strong>5 + 5 =&nbsp;</strong></h5>\\n<h5>&nbsp;</h5>\\n<h5>&nbsp;</h5>\\n<h5><strong>10 - 4 =</strong></h5>\"},\"1\":\"htmlEditor\"},\"1\":{\"0\":{\"widgetType\":\"textBoxWidget\",\"category\":\"Simple_Text_Box\",\"type\":\"Numeric\",\"width\":102,\"height\":30,\"length\":\"5\",\"answer\":\"10\",\"left\":64,\"top\":1,\"id\":\"TB_1431947219567\",\"fontColor\":\"black\",\"fontSize\":\"13pt\",\"options\":[],\"ignoreSpace\":true,\"isMathEditorApplicable\":false},\"1\":\"textBoxWidget\"},\"2\":{\"0\":{\"widgetType\":\"textBoxWidget\",\"category\":\"Simple_Text_Box\",\"type\":\"Numeric\",\"width\":96,\"height\":30,\"length\":\"5\",\"answer\":\"6\",\"left\":66,\"top\":43,\"id\":\"TB_1431947221803\",\"fontColor\":\"black\",\"fontSize\":\"13pt\",\"options\":[],\"ignoreSpace\":true,\"isMathEditorApplicable\":false},\"1\":\"textBoxWidget\"}},\"avatarData\":{\"avatarIcon\":\"images/common/avatar/avatar1.png\",\"visiblity\":true,\"message\":\"Default message<br> on author screen.\",\"position\":{\"left\":10,\"top\":410}},\"filePath\":\"/resources/1_7/Question 1.htm\"}",
-                "componentList": "textBoxWidget,htmlEditor"
+                "componentList": "textBoxWidget,htmlEditor",
+                "book_id": 1,
+                "chapter_id": 1,
+                "concept_id": 1,
+                "book_id": 1
             },
             {
                 "questionId": 8,

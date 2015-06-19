@@ -1,0 +1,459 @@
+{
+    "books": {
+        "1": {
+            "id": "1",
+            "name": "1A"
+        },
+        "2": {
+            "id": "2",
+            "name": "1B"
+        },
+        "3": {
+            "id": "3",
+            "name": "2A"
+        },
+        "4": {
+            "id": "4",
+            "name": "2B"
+        },
+        "5": {
+            "id": "5",
+            "name": "3A"
+        },
+        "6": {
+            "id": "6",
+            "name": "3B"
+        },
+        "7": {
+            "id": "7",
+            "name": "4A"
+        },
+        "8": {
+            "id": "8",
+            "name": "4B"
+        }
+    },
+    "chapters": {
+        "1": {
+            "id": "1",
+            "code": "Ch 1",
+            "name": "Numbers to 10"
+        },
+        "2": {
+            "id": "2",
+            "code": "Ch 2",
+            "name": "Number Bonds"
+        },
+        "3": {
+            "id": "3",
+            "code": "Ch 3",
+            "name": "Addition (to 10)"
+        },
+        "4": {
+            "id": "4",
+            "code": "Ch 4",
+            "name": "Subtraction (to 10)"
+        },
+        "5": {
+            "id": "5",
+            "code": "Ch 5",
+            "name": "Ordinal Numbers and Positions"
+        },
+        "6": {
+            "id": "6",
+            "code": "Ch 6",
+            "name": "Numbers to 20"
+        },
+        "7": {
+            "id": "7",
+            "code": "Ch 7",
+            "name": "Addition and Subtraction within 20"
+        },
+        "8": {
+            "id": "8",
+            "code": "Ch 8",
+            "name": "Plane Shapes"
+        },
+        "9": {
+            "id": "9",
+            "code": "Ch 9",
+            "name": "Solid Shapes"
+        },
+        "10": {
+            "id": "10",
+            "code": "Ch 10",
+            "name": "Length"
+        },
+        "11": {
+            "id": "11",
+            "code": "Ch 11",
+            "name": "Mass"
+        },
+        "12": {
+            "id": "12",
+            "code": "Ch 12",
+            "name": ""
+        },
+        "13": {
+            "id": "13",
+            "code": "Ch 13",
+            "name": "Graphs"
+        },
+        "14": {
+            "id": "14",
+            "code": "Ch 14",
+            "name": "Numbers to 40"
+        },
+        "15": {
+            "id": "15",
+            "code": "Ch 15",
+            "name": "Addition and Subtraction within 40"
+        },
+        "16": {
+            "id": "16",
+            "code": "Ch 16",
+            "name": "Fractions"
+        },
+        "17": {
+            "id": "17",
+            "code": "Ch 17",
+            "name": "Calendar and Time"
+        },
+        "18": {
+            "id": "18",
+            "code": "Ch 18",
+            "name": "Numbers to 100"
+        },
+        "19": {
+            "id": "19",
+            "code": "Ch 19",
+            "name": "Addition and Subtraction within 100"
+        },
+        "20": {
+            "id": "20",
+            "code": "Ch 20",
+            "name": "Money"
+        }
+    },
+    "concepts":{
+        "1": {
+            "id": "1",
+            "name": "Fill in missing numbers to 10"
+        },
+        "2": {
+            "id": "2",
+            "name": "Match pictures and numbers to 10"
+        },
+        "3": {
+            "id": "3",
+            "name": "More or less"
+        },
+        "4": {
+            "id": "4",
+            "name": "Ordinal numbers"
+        },
+        "5": {
+            "id": "5",
+            "name": "Words and numbers to 20"
+        },
+        "6": {
+            "id": "6",
+            "name": "Put numbers in order to 20"
+        },
+        "7": {
+            "id": "7",
+            "name": "Add using number bond and picture for + and -"
+        },
+        "8": {
+            "id": "8",
+            "name": "Ten frame to solve word problems for + and -"
+        },
+        "9": {
+            "id": "9",
+            "name": "Pictures, number bonds and fact family to 10"
+        },
+        "10": {
+            "id": "10",
+            "name": "Number lines for counting on and back to 10"
+        },
+        "11": {
+            "id": "11",
+            "name": "Word problems to 10"
+        },
+        "12": {
+            "id": "12",
+            "name": "Number lines for counting on and back to 20"
+        },
+        "13": {
+            "id": "13",
+            "name": "Number bonds to 20."
+        },
+        "14": {
+            "id": "14",
+            "name": "Word problems to 20."
+        },
+        "15": {
+            "id": "15",
+            "name": "Name 2D shapes"
+        },
+        "16": {
+            "id": "16",
+            "name": "Sort by size or shape."
+        },
+        "17": {
+            "id": "17",
+            "name": "Continue the pattern."
+        },
+        "18": {
+            "id": "18",
+            "name": "Identify corners and sides"
+        },
+        "19": {
+            "id": "19",
+            "name": "Name 3D shapes"
+        },
+        "20": {
+            "id": "20",
+            "name": "Identify properties of solids."
+        },
+        "21": {
+            "id": "21",
+            "name": "Identify solid shapes."
+        },
+        "22": {
+            "id": "22",
+            "name": "Continue the pattern."
+        },
+        "23": {
+            "id": "23",
+            "name": "Comparing length."
+        },
+        "24": {
+            "id": "24",
+            "name": "Comparing mass."
+        },
+        "25": {
+            "id": "25",
+            "name": "Comparing length using units."
+        },
+        "26": {
+            "id": "26",
+            "name": "Measuring length using informal units."
+        },
+        "27": {
+            "id": "27",
+            "name": "Comparing mass using balance scales."
+        },
+        "28": {
+            "id": "28",
+            "name": "Comparing mass using informal units."
+        },
+        "29": {
+            "id": "29",
+            "name": "Data using tally marks"
+        },
+        "30": {
+            "id": "30",
+            "name": "Picture graph"
+        },
+        "31": {
+            "id": "31",
+            "name": "Symbol on picture graph"
+        },
+        "32": {
+            "id": "32",
+            "name": "Counting by 1s to 40."
+        },
+        "33": {
+            "id": "33",
+            "name": "Number line"
+        },
+        "34": {
+            "id": "34",
+            "name": "Tens and ones"
+        },
+        "35": {
+            "id": "35",
+            "name": "Adding or subtracting without regrouping to 40"
+        },
+        "36": {
+            "id": "36",
+            "name": "Adding or subtracting without regrouping to 40 (number sentences)"
+        },
+        "37": {
+            "id": "37",
+            "name": "Adding or subtracting with regrouping to 40"
+        },
+        "38": {
+            "id": "38",
+            "name": "Adding or subtracting with regrouping to 40 (number sentences)"
+        },
+        "39": {
+            "id": "39",
+            "name": "Find a half."
+        },
+        "40": {
+            "id": "40",
+            "name": "Find a quarter."
+        },
+        "41": {
+            "id": "41",
+            "name": "Fractions in patterns."
+        },
+        "42": {
+            "id": "42",
+            "name": "Days of the week"
+        },
+        "43": {
+            "id": "43",
+            "name": "Months"
+        },
+        "44": {
+            "id": "44",
+            "name": "Duration."
+        },
+        "45": {
+            "id": "45",
+            "name": "Time to half hour."
+        },
+        "46": {
+            "id": "46",
+            "name": "Read a calendar"
+        },
+        "47": {
+            "id": "47",
+            "name": "Duration of days, months"
+        },
+        "48": {
+            "id": "48",
+            "name": "Place value to 100."
+        },
+        "49": {
+            "id": "49",
+            "name": "Numbers on number line."
+        },
+        "50": {
+            "id": "50",
+            "name": "Skip counting."
+        },
+        "51": {
+            "id": "51",
+            "name": "Add and subtract without regrouping to 100."
+        },
+        "52": {
+            "id": "52",
+            "name": "Word problems without regrouping."
+        },
+        "53": {
+            "id": "53",
+            "name": "Add and subtract with regrouping to 100."
+        },
+        "54": {
+            "id": "54",
+            "name": "Word problems with regrouping."
+        },
+        "55": {
+            "id": "55",
+            "name": "Recognising coins and notes."
+        },
+        "56": {
+            "id": "56",
+            "name": "Exchange money."
+        },
+        "57": {
+            "id": "57",
+            "name": "Count money to pay for an item."
+        },
+        "58": {
+            "id": "58",
+            "name": "Compare money amounts"
+        }
+    },
+    "topics":{
+        "1": {
+            "id": "1",
+            "code": "NA001",
+            "name": "Count to 30"
+        },
+         "2": {
+            "id": "2",
+            "code": "NA002",
+            "name": "Numbers, names"
+        },
+         "3": {
+            "id": "3",
+            "code": "NA289",
+            "name": "Compare/Order"
+        },
+         "4": {
+            "id": "4",
+            "code": "NA004",
+            "name": "Add/ subtract"
+        },
+         "5": {
+            "id": "5",
+            "code": "NA005",
+            "name": "Patterns"
+        },
+         "6": {
+            "id": "6",
+            "code": "NA012",
+            "name": "Count to 40"
+        },
+         "7": {
+            "id": "7",
+            "code": "NA012",
+            "name": "Count to 100"
+        },
+         "8": {
+            "id": "8",
+            "code": "NA013",
+            "name": "Numbers/ line to 40"
+        },
+         "9": {
+            "id": "9",
+            "code": "NA013",
+            "name": "Numbers/ line to 100"
+        },
+         "10": {
+            "id": "10",
+            "code": "NA014",
+            "name": "Place value to 40"
+        },
+         "11": {
+            "id": "11",
+            "code": "NA014",
+            "name": "Place value to 100"
+        },
+         "12": {
+            "id": "12",
+            "code": "NA015",
+            "name": "Add / subtract to 20"
+        },
+         "13": {
+            "id": "13",
+            "code": "NA016",
+            "name": "One half"
+        },
+         "14": {
+            "id": "14",
+            "code": "NA017",
+            "name": "Australian coins, notes"
+        },
+         "15": {
+            "id": "15",
+            "code": "NA018",
+            "name": "Patterns"
+        },
+         "16": {
+            "id": "16",
+            "code": "NA030",
+            "name": "Add / subtract to 40"
+        },
+         "17": {
+            "id": "17",
+            "code": "NA030",
+            "name": "Add / subtract to 100"
+        }
+    }
+}

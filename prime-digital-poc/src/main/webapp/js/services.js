@@ -100,7 +100,7 @@ function playerServices($http, $q) {
             url: 'api/v1/quizzes/putSubmitedQuizData',
             data: data,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json; charset=UTF-8'
             },
             timeout: 30000, // timeout abort AJAX
             cache: false
