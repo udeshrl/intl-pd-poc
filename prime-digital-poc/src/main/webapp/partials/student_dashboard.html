@@ -1,0 +1,15 @@
+<div class="alert alert-success">
+    <i class="fa fa-check"></i> Hello <strong>{{userInfo.first_name}},</strong> you are logged in! Select the test from the list below and start the Quiz. All the best.
+</div>
+
+<div class="list-group">
+    <ul class="quiz-list">
+        <li ng-repeat="quiz in quizData" ng-init="key = userInfo.id + '_' + quiz.testID">
+            <a ng-href="#/quiz/{{quiz.testID}}/{{userInfo.id}}" class="list-group-item"><i class="fa fa-hand-o-right"></i> {{quiz.title}} <span class="badge pull-right" ng-if="studentQuizData[key]">{{studentQuizData[key].resultPercentage}}%</span> </a>
+        </li>
+    </ul>
+
+</div>
+<style>
+    #author_content_container{display:none;}
+</style>

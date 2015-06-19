@@ -1,0 +1,26 @@
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                       http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="primedigital" transaction-type="JTA">
+		<jta-data-source>primedigital-ds</jta-data-source>
+		
+		<class>com.scholastic.primedigital.data.model.User</class>
+		<class>com.scholastic.primedigital.data.model.Quize</class>
+		<class>com.scholastic.primedigital.data.model.QuizeQuestion</class>
+		<class>com.scholastic.primedigital.data.model.StudentQuizActivity</class>
+		<class>com.scholastic.primedigital.data.model.StudentQuizActivityQuestions</class>
+		
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+		<properties>
+			<property name="hibernate.dialect" value="com.scholastic.intl.primedigital.cammon.utill.PDAuthorizeMySqlDialect"/>
+			<property name="hibernate.archive.autodetection" value="class, hbm"/>
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<property name="hibernate.search.default.locking_strategy" value="single"/>
+			<property name="hibernate.cache.use_second_level_cache" value="true" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
+			<property name="hibernate.cache.region.factory_class" value="org.jboss.as.jpa.hibernate4.infinispan.InfinispanRegionFactory"/>
+		</properties>
+	</persistence-unit>
+</persistence>
