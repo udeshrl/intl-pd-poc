@@ -62,7 +62,7 @@ public class StudentQuizActivity implements Serializable{
 	@JoinColumn(name="student_user_id",nullable=false)
 	private User studentUser; 
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "studentQuizActivity", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "studentQuizActivity", cascade= CascadeType.ALL)
 	@BatchSize(size=40)
 	protected List<StudentQuizActivityQuestions> question = new ArrayList<StudentQuizActivityQuestions>();
 	

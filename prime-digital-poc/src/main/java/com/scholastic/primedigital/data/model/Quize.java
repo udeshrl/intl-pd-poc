@@ -38,7 +38,7 @@ public class Quize implements Serializable{
 	@Column(length = 20)
 	private String name;
 	
-	@OneToMany(mappedBy = "quize",fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "quize",fetch=FetchType.EAGER)
 	@BatchSize(size=50)
 	protected List<QuizeQuestion> questions = new ArrayList<>();
 	
