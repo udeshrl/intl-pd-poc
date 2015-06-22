@@ -4,8 +4,8 @@
 
 <div class="list-group">
     <ul class="quiz-list">
-        <li ng-repeat="quiz in quizData" ng-init="key = userInfo.id + '_' + quiz.quizId">
-            <a ng-href="#/quiz/{{quiz.quizId}}/{{userInfo.id}}" class="list-group-item"><i class="fa fa-hand-o-right"></i> {{quiz.quizName}} <span class="badge pull-right" ng-if="studentQuizData[key]">{{studentQuizData[key].resultPercentage}}%</span> </a>
+        <li ng-repeat="quiz in quizData">
+            <a ng-href="#/quiz/{{quiz.quizId}}/{{userInfo.id}}" class="list-group-item"><i class="fa fa-hand-o-right"></i> {{quiz.quizName}} <span class="badge pull-right" ng-if="studentQuizData[quiz.quizId].status == 0">{{studentQuizData[quiz.quizId].percentage}}%</span> </a>
         </li>
     </ul>
 

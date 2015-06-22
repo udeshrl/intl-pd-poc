@@ -3,15 +3,15 @@
 </div>
 
 <div class="panel-group" id="accordion">
-    <div class="panel panel-default" ng-repeat="quiz in quizData" ng-init="key = studentInfo.id + '_' + quiz.testID">
+    <div class="panel panel-default" ng-repeat="quiz in quizData">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="collapse(quiz.testID,key)"><i class="fa fa-hand-o-right"></i> {{quiz.title}} <span class="badge pull-right" ng-if="studentQuizData[key]">{{studentQuizData[key].resultPercentage}}%</span></a>
+                <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="collapse(quiz.quizId)"><i class="fa fa-hand-o-right"></i> {{quiz.title}} <span class="badge pull-right" ng-if="studentQuizData[quiz.quizId].status == 0">{{studentQuizData[quiz.quizId].percentage}}%</span></a>
             </h4>
         </div>
         
-        <div id="collapse{{quiz.testID}}" class="panel-collapse" ng-show="accordion == '{{quiz.testID}}'" ng-if="studentQuizData[key]">
-            <div class="panel-body" ng-if="studentQuizData[key].resultPercentage < 100">
+        <div id="collapse{{quiz.quizId}}" class="panel-collapse" ng-show="accordion == '{{quiz.quizId}}'" ng-if="studentQuizData[quiz.quizId].status == 0">
+            <div class="panel-body" ng-if="studentQuizData[quiz.quizId].percentage < 100">
                 <div> <p>Following are the items from the Quiz that this student got it wrong.</p>
                 </div>
 
@@ -19,18 +19,18 @@
                     
                     <ul class="pagination">
                        
-                        <li ng-repeat="newkey in notSorted(studentQuizData[key].resultQuestionObj)" ng-init="result = studentQuizData[key].resultQuestionObj[newkey]"><span ng-if="!result"><a ng-href="#/quiz/{{quiz.testID}}/{{studentInfo.id}}?q={{$index}}">{{$index + 1}}</a></span></li>
+                        <li ng-repeat="newkey in notSorted(studentQuizData[quiz.quizId].resultQuestionObj)" ng-init="result = [studentInfo.id][quiz.quizId].resultQuestionObj[newkey]"><span ng-if="!result"><a ng-href="#/quiz/{{quiz.quizId}}/{{studentInfo.id}}?q={{$index}}">{{$index + 1}}</a></span></li>
                     </ul>
                 </div>
             </div>
-            <div class="panel-body" ng-if="studentQuizData[key].resultPercentage == 100">
+            <div class="panel-body" ng-if="studentQuizData[quiz.quizId].percentage == 100">
                 <div> <p>All the answers are correct. Click below to view the answers</p>
                 </div>
 
                 <div class="row center-pagination">
                     
                     <ul class="pagination">
-                        <li ><a ng-href="#/quiz/{{quiz.testID}}/{{studentInfo.id}}">Check Answers</a></li>
+                        <li ><a ng-href="#/quiz/{{quiz.quizId}}/{{studentInfo.id}}">Check Answers</a></li>
                     </ul>
                 </div>
             </div>
