@@ -58,20 +58,6 @@ function appController($rootScope, $scope, $location, userServices, playerServic
         console.log('User retrieval failed.')
     });
 
-    //Get all quiz records
-    playerServices.getQuizDataService().then(function (data) {
-        $scope.quizData = playerServices.getAllQuizData();
-    }, function (data) {
-        console.log('Quiz retrieval failed.')
-    });
-
-    //Get all student Quiz records
-    playerServices.getStudentQuizDataService().then(function (data) {
-        $scope.studentQuizData = playerServices.getAllStudentQuizData();
-    }, function (data) {
-        console.log('student quiz retrieval failed.')
-    });
-
     // Set App Constants
     $rootScope.appConstants = appConstants;
 
@@ -92,12 +78,25 @@ function appController($rootScope, $scope, $location, userServices, playerServic
  * Student Dashboard Controller
  * 
  */
-function DashboardCtrl($rootScope, $scope, $location) {
+function DashboardCtrl($rootScope, $scope, $location, playerServices) {
     //Redirect to Teacher Dashboard if its Teacher looged in
     if ($rootScope.userInfo.role == 'teacher') {
         $location.path('/dashboard/');
         return;
     }
+    //Get all quiz records
+    playerServices.getQuizDataService($rootScope.userInfo.id).then(function (data) {
+        $scope.quizData = playerServices.getAllQuizData($rootScope.userInfo.id);
+    }, function (data) {
+        console.log('Quiz retrieval failed.')
+    });
+
+    //Get all student Quiz records
+    playerServices.getStudentQuizDataService($rootScope.userInfo.id).then(function (data) {
+        $scope.studentQuizData = playerServices.getAllStudentQuizData($rootScope.userInfo.id);
+    }, function (data) {
+        console.log('student quiz retrieval failed.')
+    });
 }
 
 
@@ -122,17 +121,25 @@ function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServ
     var sId = $routeParams.sId;
     $scope.studentInfo = $rootScope.allStudents[sId];  //Get Particualr student record
 
-    //Get All Quiz Records
-    $scope.quizData = playerServices.getAllQuizData();
+    //Get all quiz records
+    playerServices.getQuizDataService(sId).then(function (data) {
+        $scope.quizData = playerServices.getAllQuizData(sId);
+    }, function (data) {
+        console.log('Quiz retrieval failed.')
+    });
 
-    //Get All Student Quiz Records
-    $scope.studentQuizData = playerServices.getAllStudentQuizData();
+//Get all student Quiz records
+    playerServices.getStudentQuizDataService(sId).then(function (data) {
+        $scope.studentQuizData = playerServices.getAllStudentQuizData(sId);
+    }, function (data) {
+        console.log('student quiz retrieval failed.')
+    });
 
     $scope.accordion = 0;
 
     //Change Accordion collapse
-    $scope.collapse = function (testID, key) {
-        if ($scope.studentQuizData[key]) {
+    $scope.collapse = function (testID, studentId) {
+        if ($scope.studentQuizData[studentId][testID]) {
             $scope.accordion = testID;
         }
     }

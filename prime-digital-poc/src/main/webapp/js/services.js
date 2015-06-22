@@ -20,11 +20,11 @@ primeDigitalPlayer.factory('playerServices', playerServices);
  * 
  */
 function playerServices($http, $q) {
-    var allTestsJSON = '', testJSON = '', allStudentQuizData = {};
+    var allTestsJSON = {}, testJSON = {}, allStudentQuizData = {};
 
     var quizData = {
         studentID: '',
-        questionArr: {},
+        questions: {},
         ansArr: {},
         resultQuestionObj: {},
         totalQuestion: 0,
@@ -42,16 +42,21 @@ function playerServices($http, $q) {
      * Get All Quiz records from JSON
      * 
      */
-    var getQuizDataService = function () {
+    var getQuizDataService = function (sId) {
         var def = $q.defer();
-        $http.get("data/quiz.json")
-                .success(function (data) {
-                    allTestsJSON = data;
-                    def.resolve(data);
-                })
-                .error(function () {
-                    def.reject("Failed to get Quiz");
-                });
+        if (allTestsJSON[sId]) {
+            def.resolve();
+        } else {
+            $http.get("api/v1/quizzes/getquizeData/" + sId)
+                    .success(function (data) {
+                        allTestsJSON[sId] = data.quizTypes;
+                        def.resolve(data);
+                    })
+                    .error(function () {
+                        def.reject("Failed to get Quiz");
+                    });
+        }
+
         return def.promise;
     }
 
@@ -63,24 +68,28 @@ function playerServices($http, $q) {
      * Get All Student Quiz records from JSON
      * 
      */
-    var getStudentQuizDataService = function () {
+    var getStudentQuizDataService = function (sId) {
         var def = $q.defer();
-        $http({
-            method: 'GET', // support GET, POST, PUT, DELETE
-            url: 'data/student_quiz.json',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            },
-            timeout: 30000, // timeout abort AJAX
-            cache: false
-        }).
-                success(function (data) {
-                    allStudentQuizData = data;
-                    def.resolve(data);
-                }).
-                error(function (data) {
-                    def.reject("Failed to get Quiz");
-                });
+        if (allStudentQuizData[sId]) {
+            def.resolve();
+        } else {
+            $http({
+                method: 'GET', // support GET, POST, PUT, DELETE
+                url: 'api/v1/quizzes/getquizeResultData/' + sId,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                timeout: 30000, // timeout abort AJAX
+                cache: false
+            }).
+                    success(function (data) {
+                        allStudentQuizData[sId] = parseStudentQuizResult(data.quizResultType);
+                        def.resolve(data);
+                    }).
+                    error(function (data) {
+                        def.reject("Failed to get Quiz");
+                    });
+        }
 
         return def.promise;
     }
@@ -126,8 +135,8 @@ function playerServices($http, $q) {
      * @return {object}
      * 
      */
-    var getAllQuizData = function () {
-        return allTestsJSON;
+    var getAllQuizData = function (sid) {
+        return allTestsJSON[sid];
     };
 
     /**
@@ -140,8 +149,8 @@ function playerServices($http, $q) {
      * @return {object}
      * 
      */
-    var getAllStudentQuizData = function () {
-        return allStudentQuizData;
+    var getAllStudentQuizData = function (sid) {
+        return allStudentQuizData[sid];
     };
 
     /**
@@ -158,24 +167,28 @@ function playerServices($http, $q) {
      * 
      */
     var setQuiz = function (qid, studentid) {
-        if (allTestsJSON[qid]) {
-            testJSON = allTestsJSON[qid];
+
+        var tempTestJSON = $.grep(allTestsJSON[studentid], function (e) {
+            return e.quizId == qid;
+        });
+        if (tempTestJSON.length > 0) {
+            testJSON = tempTestJSON[0];
             quizData = {
                 studentID: '',
-                questionArr: {},
+                questions: {},
                 ansArr: {},
                 resultArr: {}
             }
             quizData.studentID = studentid;
-            quizData.totalQuestion = testJSON.questionArr.length;
+            quizData.totalQuestion = testJSON.questions.length;
             var studentQuizData = getStudentQuizData(studentid, qid);
-            if (studentQuizData) {
+            if (studentQuizData.status == 0) {
                 quizData.ansArr = studentQuizData.ansArr;
                 quizData.resultArr = studentQuizData.resultArr;
                 quizData.resultQuestionObj = studentQuizData.resultQuestionObj;
                 quizData.totalQuestion = studentQuizData.totalQuestion;
                 quizData.correctAns = studentQuizData.correctAns;
-                quizData.resultPercentage = studentQuizData.resultPercentage;
+                quizData.percentage = studentQuizData.percentage;
             }
 
             return true;
@@ -195,7 +208,7 @@ function playerServices($http, $q) {
      * 
      */
     var getAllQuestion = function () {
-        return testJSON.questionArr;
+        return testJSON.questions;
     };
 
     /**
@@ -209,7 +222,7 @@ function playerServices($http, $q) {
      * 
      */
     var getQuizTitle = function () {
-        return testJSON.title;
+        return testJSON.quizName;
     };
 
     /**
@@ -240,7 +253,7 @@ function playerServices($http, $q) {
      * 
      */
     var getQuestionData = function (idx) {
-        return testJSON.questionArr[idx];
+        return testJSON.questions[idx];
     };
 
     /**
@@ -279,15 +292,14 @@ function playerServices($http, $q) {
      * Get Student's Quiz Record if already attempted
      * 
      * @param {string} studentID
-     * @param {string} testID
+     * @param {string} quizId
      * 
      * @return {object/false} object if record found, false false otherwise
      * 
      */
-    var getStudentQuizData = function (studentID, testID) {
-        var key = studentID + '_' + testID;
-        if (allStudentQuizData[key]) {
-            return allStudentQuizData[key];
+    var getStudentQuizData = function (studentID, quizId) {
+        if (allStudentQuizData[studentID][quizId]) {
+            return allStudentQuizData[studentID][quizId];
         }
         return false;
     };
@@ -302,7 +314,7 @@ function playerServices($http, $q) {
      * 
      */
     var submitQuestions = function () {
-        var allQData = quizData.questionArr, qData;
+        var allQData = quizData.questions, qData;
         var resultData = [];
 
         //Loop all question
@@ -330,12 +342,34 @@ function playerServices($http, $q) {
      * 
      */
     var checkQuizIniate = function () {
-        if (testJSON == '') {
+        if ($.isEmptyObject(testJSON)) {
             return false;
         } else {
             return true;
         }
 
+    };
+
+    /**
+     * @ngdoc function
+     * @name parseStudentQuizResult
+     * @description
+     *
+     * parse the student quiz result
+     * 
+     * @return {object}
+     * 
+     */
+    var parseStudentQuizResult = function (resultArr) {
+        var lookup = {}, resultObj = {};
+        for (var i = 0, len = resultArr.length; i < len; i++) {
+            resultObj = resultArr[i];
+            resultObj.ansArr = JSON.parse(resultObj.answerArray);
+            resultObj.resultArr = JSON.parse(resultObj.resultArray);
+            resultObj.resultQuestionObj = JSON.parse(resultObj.resultQuestionObject);
+            lookup[resultArr[i].quizId] = resultObj;
+        }
+        return lookup;
     };
 
 
@@ -352,7 +386,7 @@ function playerServices($http, $q) {
     var getResult = function (sid) {
         var allQData = quizData.resultArr, qData;
         var resultQuestionObj = {}, qResult;
-        var totalQuestion = testJSON.questionArr.length, correctAns = 0, resultPercentage = '';
+        var totalQuestion = testJSON.questions.length, correctAns = 0, resultPercentage = '';
 
         //Loop all questions
         _.each(allQData, function (qData, qIndex) {
@@ -375,26 +409,30 @@ function playerServices($http, $q) {
         resultPercentage = parseInt(correctAns / totalQuestion * 100);
 
         // create key based on student and quiz id
-        var key = sid + '_' + testJSON.testID;
+        var key = sid + '_' + testJSON.quizId;
 
         // Create Student quiz object
         var resultObj = {};
         resultObj.ID = key;
-        resultObj.testID = testJSON.testID;
+        resultObj.quizId = testJSON.quizId;
         resultObj.studentID = sid;
         resultObj.ansArr = JSON.stringify(quizData.ansArr);
         resultObj.resultArr = JSON.stringify(quizData.resultArr);
-        quizData.resultQuestionObj = resultObj.resultQuestionObj = JSON.stringify(resultQuestionObj);
+        quizData.resultQuestionObj = resultQuestionObj;
+        resultObj.resultQuestionObj = JSON.stringify(quizData.resultQuestionObj);
         quizData.totalQuestion = resultObj.totalQuestion = totalQuestion;
         quizData.correctAns = resultObj.correctAns = correctAns;
-        quizData.resultPercentage = resultObj.resultPercentage = resultPercentage;
+        quizData.percentage = resultObj.percentage = resultPercentage;
 
 
 
         // merge student quiz object with all records
-        allStudentQuizData[key] = resultObj
-        this.putStudentQuizDataService(resultObj);
 
+        this.putStudentQuizDataService(resultObj);
+        resultObj.ansArr = quizData.ansArr;
+        resultObj.resultArr = quizData.resultArr;
+        resultObj.resultQuestionObj = quizData.resultQuestionObj;
+        allStudentQuizData[sid][testJSON.quizId] = resultObj;
         console.log(JSON.stringify(resultObj));
         return {resultQuestionObj: resultQuestionObj, totalQuestion: totalQuestion, correctAns: correctAns, resultPercentage: resultPercentage};
     };
@@ -411,7 +449,7 @@ function playerServices($http, $q) {
      * 
      */
     var storeUserAnswerData = function (idx) {
-        var qData = quizData.questionArr[idx];
+        var qData = quizData.questions[idx];
         var ansData = [];
         // Loop all components
         _.each(qData.widgetList, function (elem, index) {
@@ -433,7 +471,7 @@ function playerServices($http, $q) {
      */
     var setUserAnswerData = function (idx) {
         if (quizData.ansArr && quizData.ansArr[idx]) {
-            var widgetData = quizData.questionArr[idx];
+            var widgetData = quizData.questions[idx];
             var answerData = quizData.ansArr[idx];
             // Loop All components
             _.each(widgetData.widgetList, function (elem, index) {
@@ -457,7 +495,7 @@ function playerServices($http, $q) {
      * 
      */
     var revealAnswer = function (idx) {
-        var widgetData = quizData.questionArr[idx];
+        var widgetData = quizData.questions[idx];
         // Loop All components
         _.each(widgetData.widgetList, function (elem, index) {
             elem.revealAnswer(); // Reveal Answer
@@ -476,7 +514,7 @@ function playerServices($http, $q) {
      * 
      */
     var deactivateQuestion = function (idx) {
-        var widgetData = quizData.questionArr[idx];
+        var widgetData = quizData.questions[idx];
         // Loop All components
         _.each(widgetData.widgetList, function (elem, index) {
             elem.deactivate(); // deactivate component
@@ -494,7 +532,7 @@ function playerServices($http, $q) {
      * 
      */
     var activateQuestion = function (idx) {
-        var widgetData = quizData.questionArr[idx];
+        var widgetData = quizData.questions[idx];
         // Loop All components
         _.each(widgetData.widgetList, function (elem, index) {
             elem.activate(); // activate component
@@ -514,7 +552,7 @@ function playerServices($http, $q) {
      * 
      */
     var resetQuestion = function (idx, role) {
-        var widgetData = quizData.questionArr[idx];
+        var widgetData = quizData.questions[idx];
         // Loop All components
         _.each(widgetData.widgetList, function (elem, index) {
             elem.reset(); // Reset component
@@ -542,15 +580,15 @@ function playerServices($http, $q) {
         var questionObj = {
             widgetList: []
         };
-        if (quizData.questionArr[idx]) {
-            questionObj = quizData.questionArr[idx];
+        if (quizData.questions[idx]) {
+            questionObj = quizData.questions[idx];
             data = questionObj.data;
         } else {
-            if (!testJSON.questionArr[idx]) {
+            if (!testJSON.questions[idx]) {
                 return false;
             }
-            var strFullJson = testJSON.questionArr[idx];
-            var strComponentJson = strFullJson.json;
+            var strFullJson = testJSON.questions[idx];
+            var strComponentJson = strFullJson.jsonData;
             var data = JSON.parse(strComponentJson);
             data.filePath = strFullJson.filePath; //Note this is from separate variable
             questionObj.data = data;
@@ -638,7 +676,7 @@ function playerServices($http, $q) {
                 questionObj.widgetList.push(new dragDrop(initSetting));
             }
         });
-        quizData.questionArr[idx] = questionObj;
+        quizData.questions[idx] = questionObj;
         this.setUserAnswerData(idx);
         if (!$.isEmptyObject(quizData.resultArr)) {
             this.deactivateQuestion(idx);
@@ -667,6 +705,7 @@ function playerServices($http, $q) {
         deactivateQuestion: deactivateQuestion,
         getStudentQuizDataService: getStudentQuizDataService,
         getStudentQuizData: getStudentQuizData,
+        parseStudentQuizResult: parseStudentQuizResult,
         getResultArr: getResultArr,
         getAllStudentQuizData: getAllStudentQuizData,
         getResult: getResult
