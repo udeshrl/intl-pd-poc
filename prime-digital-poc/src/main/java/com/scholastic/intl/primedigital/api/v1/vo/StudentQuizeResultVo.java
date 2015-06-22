@@ -45,8 +45,8 @@ public class StudentQuizeResultVo {
 	@JsonProperty("correctAns")
 	private Integer correctAnswers;
 	
-	@XmlElement(name="resultPercentage")
-	@JsonProperty("resultPercentage")
+	@XmlElement(name="percentage")
+	@JsonProperty("percentage")
 	private Double percentage;
 
 	

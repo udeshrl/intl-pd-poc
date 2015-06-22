@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -148,6 +149,7 @@ public class QuizResource {
 			studnetQuizActivity.setTotalNumberQuestionIssued(studentQuizResultVo.getTotalQuestions());
 			studnetQuizActivity.setNumQuestionAnsweredCorrect(studentQuizResultVo.getCorrectAnswers());
 			studnetQuizActivity.setPercentage(studentQuizResultVo.getPercentage());
+			studnetQuizActivity.setStatus(0);
 			try {
 				ut.begin();
 				em.merge(studnetQuizActivity);
