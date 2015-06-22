@@ -40,5 +40,16 @@ public class QuizService {
 		}
 	
 	}
+	
+	
+	public StudentQuizActivity findStudentQuizActitiy(Integer studentId, Integer quizeId) {
+		
+		TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_FIND_ACTIVITY,
+				StudentQuizActivity.class);
+		query.setParameter("studentId", studentId);
+		query.setParameter("quizeId", quizeId);
+		
+		return query.getSingleResult();
+	}
 
 }

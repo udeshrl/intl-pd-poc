@@ -4,6 +4,8 @@ package com.scholastic.intl.primedigital.api.v1.resources;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -37,6 +39,12 @@ public class QuizResource {
 	@Inject
 	QuizService quizService;
 	
+	@Inject
+	EntityManager em;
+	
+	@Inject
+	UserTransaction ut;
+	
 	@GET
 	@Path("/student")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -67,63 +75,31 @@ public class QuizResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ListQuizeType getQuizzesData(@PathParam("studentId")Integer studentId) {
 
-		
-		List<StudentQuizActivity> studentActity = quizService.getStudentQuizActitiy(1);
+		ListQuizeType listquizetype = new ListQuizeType();
+		List<StudentQuizActivity> studentActity = quizService.getStudentQuizActitiy(studentId);
 		for (StudentQuizActivity activity : studentActity) {
-			System.out.println("QuizId"+activity.getQuize().getName());
-			System.out.println("activity" +activity.getId());
-			for (StudentQuizActivityQuestions activtiyQuestions : activity.getQuestion() ) {
-					System.out.println("QuestionID "+activtiyQuestions.getQuizQuestions().getId());
-					System.out.println("FilePath "+activtiyQuestions.getQuizQuestions().getFilePath());
-					System.out.println("Data "+activtiyQuestions.getQuizQuestions().getData());
-					System.out.println("Componets "+activtiyQuestions.getQuizQuestions().getComponets());
-			}
+				QuizType quizType = new QuizType();
+				quizType.setQuizId(activity.getId());
+				quizType.setQuizName(activity.getQuize().getName());
+				for (StudentQuizActivityQuestions question : activity.getQuestion() ) {
+						QuizQuestionsType questionsType = new QuizQuestionsType();
+						questionsType.setQuestionId(question.getId());
+						questionsType.setSequence(question.getSequence());
+						questionsType.setFilePath(question.getQuizQuestions().getFilePath());
+						questionsType.setJsonData(question.getQuizQuestions().getData());
+						questionsType.setComponets(question.getQuizQuestions().getComponets());
+						questionsType.setBookId(question.getQuizQuestions().getBookId());
+						questionsType.setChapterId(question.getQuizQuestions().getChapterId());
+						questionsType.setConceptId(question.getQuizQuestions().getConceptId());
+						questionsType.setCategoreyId(question.getQuizQuestions().getCategoreyId());
+						quizType.addquestionType(questionsType);
+				}
+				listquizetype.addQuizType(quizType);
 		}
 		
-		ListQuizeType listquizetype1 = new ListQuizeType();
-		QuizType quiztype1 = new QuizType();
-		
-		QuizQuestionsType questions1 = new QuizQuestionsType();
-		questions1.setQuestionId(1);
-		questions1.setFilePath("/srini.html");
-		questions1.setJsonData("JSONDAT");
-		questions1.setSequence(1);
-		QuizQuestionsType questions2 = new QuizQuestionsType();
-		questions2.setQuestionId(2);
-		questions2.setFilePath("/srini1.html");
-		questions2.setJsonData("JSONDAT2");
-		questions2.setSequence(2);
-		
-		quiztype1.setQuizId(11);
-		quiztype1.addquestionType(questions1);
-		quiztype1.addquestionType(questions2);
 		
 		
-		
-		
-		
-		QuizType quiztype2 = new QuizType();
-		
-		QuizQuestionsType questions3 = new QuizQuestionsType();
-		questions3.setQuestionId(111);
-		questions3.setFilePath("/srini.html");
-		questions3.setJsonData("JSONDAT");
-		questions3.setSequence(12);
-		QuizQuestionsType questions24= new QuizQuestionsType();
-		questions24.setQuestionId(222);
-		questions24.setFilePath("/srini1.html");
-		questions24.setJsonData("JSONDAT2");
-		questions24.setSequence(23);
-		
-		quiztype2.setQuizId(12);
-		quiztype2.addquestionType(questions3);
-		quiztype2.addquestionType(questions24);
-		
-		
-		listquizetype1.addQuizType(quiztype1);
-		listquizetype1.addQuizType(quiztype2);
-		
-		return listquizetype1;
+		return listquizetype;
 		
 	}
 	
@@ -133,17 +109,32 @@ public class QuizResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseVo saveQuiz(StudentQuizeResultVo studentQuizResultVo) {
 		ResponseVo response = new ResponseVo();
-		System.out.println("testID"+studentQuizResultVo.getActivityId());
-		System.out.println("testID"+studentQuizResultVo.getQuizId());
-		System.out.println("studentID"+studentQuizResultVo.getStudentId());
-		System.out.println("ansArr"+studentQuizResultVo.getAnswerArray());
-		System.out.println("resultArr"+studentQuizResultVo.getResultArray());
-		System.out.println("resultQuestionObj"+studentQuizResultVo.getResultQuestionObject());
-		System.out.println("totalQuestion"+studentQuizResultVo.getTotalQuestions());
-		System.out.println("resultQuestionObj"+studentQuizResultVo.getResultQuestionObject());
-		System.out.println("correctAns"+studentQuizResultVo.getCorrectAnswers());
-		System.out.println("resultPercentage"+studentQuizResultVo.getPercentage());
-		response.setMessage("SUCESSS");
+		StudentQuizActivity studnetQuizActivity = 
+				quizService.findStudentQuizActitiy(studentQuizResultVo.getStudentId(), studentQuizResultVo.getQuizId());
+		
+		if (studnetQuizActivity != null) {
+			
+			studnetQuizActivity.setResultArray(studentQuizResultVo.getResultArray());
+			studnetQuizActivity.setAnswerArray(studentQuizResultVo.getAnswerArray());
+			studnetQuizActivity.setResultQuestionObject(studentQuizResultVo.getResultQuestionObject());
+			studnetQuizActivity.setTotalNumberQuestionIssued(studentQuizResultVo.getTotalQuestions());
+			studnetQuizActivity.setNumQuestionAnsweredCorrect(studentQuizResultVo.getCorrectAnswers());
+			studnetQuizActivity.setPercentage(studentQuizResultVo.getPercentage());
+			try {
+				ut.begin();
+				em.merge(studnetQuizActivity);
+				ut.commit();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			response.setMessage("SUCESSS");
+			//studnetQuizActivity.setCorrectAnswers(studentQuizResultVo.getCorrectAnswers());
+		} else {
+			response.setMessage("FAILURE");
+		}
+		
+		
 		return response;
 		
 	}

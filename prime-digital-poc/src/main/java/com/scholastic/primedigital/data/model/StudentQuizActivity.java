@@ -27,7 +27,9 @@ import org.hibernate.annotations.BatchSize;
 @Table(name = "student_quiz_activites")
 @NamedQueries({ 
 	@NamedQuery(name = StudentQuizActivity.QUERY_ALL, 
-			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId ")
+			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId "),
+	@NamedQuery(name = StudentQuizActivity.QUERY_FIND_ACTIVITY, 
+			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId AND SA.quize.id= :quizeId ")
 	
 })
 public class StudentQuizActivity implements Serializable{
@@ -39,6 +41,7 @@ public class StudentQuizActivity implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	public static final String QUERY_ALL = "studentQuizActivity.getStudentQuizActitiy";
+	public static final String QUERY_FIND_ACTIVITY = "studentQuizActivity.findStudentQuizActitiy";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,6 +77,19 @@ public class StudentQuizActivity implements Serializable{
 	
 	@Column(name = "status", nullable = true)
 	private Integer status;
+	
+	@Column(name = "answers_array", nullable = true, columnDefinition="longtext")
+	private String answerArray;
+	
+	@Column(name = "result_array", nullable = true, columnDefinition="longtext")
+	private String resultArray;
+	
+	@Column(name = "result_question_object", nullable = true, columnDefinition="longtext")
+	private String resultQuestionObject;
+	
+	
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -154,10 +170,31 @@ public class StudentQuizActivity implements Serializable{
 	public void setQuestion(List<StudentQuizActivityQuestions> question) {
 		this.question = question;
 	}
-	
-	
-	
-	
-	
+
+	public String getAnswerArray() {
+		return answerArray;
+	}
+
+	public void setAnswerArray(String answerArray) {
+		this.answerArray = answerArray;
+	}
+
+	public String getResultArray() {
+		return resultArray;
+	}
+
+	public void setResultArray(String resultArray) {
+		this.resultArray = resultArray;
+	}
+
+	public String getResultQuestionObject() {
+		return resultQuestionObject;
+	}
+
+	public void setResultQuestionObject(String resultQuestionObject) {
+		this.resultQuestionObject = resultQuestionObject;
+	}
+
+		
 
 }

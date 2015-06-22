@@ -15,6 +15,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 public class QuizType {
 
 	private Integer quizId;
+	private String quizName;
 	private List<QuizQuestionsType> questions = null;
 
 	public Integer getQuizId() {
@@ -42,5 +43,15 @@ public class QuizType {
 			getQuestions().add(questionsType);
 		}
 	}
+
+	public String getQuizName() {
+		return quizName;
+	}
+
+	public void setQuizName(String quizName) {
+		this.quizName = quizName;
+	}
+	
+	
 
 }

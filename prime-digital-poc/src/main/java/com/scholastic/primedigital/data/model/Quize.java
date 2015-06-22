@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class Quize implements Serializable{
 	@Column(length = 20)
 	private String name;
 	
-	@OneToMany(mappedBy = "quize")
+	@OneToMany(mappedBy = "quize",fetch=FetchType.LAZY)
 	@BatchSize(size=50)
 	protected List<QuizeQuestion> questions = new ArrayList<>();
 	
