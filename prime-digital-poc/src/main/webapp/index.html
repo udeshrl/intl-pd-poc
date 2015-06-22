@@ -102,7 +102,7 @@
                     <li ng-if="studentName != ''"><strong>Student:</strong> {{studentName}}</li>
                     <li><strong>Quiz:</strong> {{quizTitle}}</li>
                     <li class="pull-right alert alert-success" ng-if="quizDeactive">                 
-                        <strong>Score:</strong> {{quizDataObj.resultPercentage}}%
+                        <strong>Score:</strong> {{quizDataObj.percentage}}%
                     </li>
                     <li class="pull-right alert alert-warning" ng-if="!quizDeactive">                 
                         <strong>Attempted:</strong> {{quizDataObj.ansArr| length}}/{{quizDataObj.totalQuestion}}

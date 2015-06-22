@@ -428,7 +428,7 @@ function playerServices($http, $q) {
 
         // merge student quiz object with all records
 
-        this.putStudentQuizDataService(resultObj);
+        this.putStudentQuizDataService($.extend({}, resultObj));
         resultObj.ansArr = quizData.ansArr;
         resultObj.resultArr = quizData.resultArr;
         resultObj.resultQuestionObj = quizData.resultQuestionObj;
