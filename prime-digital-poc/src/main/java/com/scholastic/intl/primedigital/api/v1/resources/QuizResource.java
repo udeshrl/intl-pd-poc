@@ -27,6 +27,8 @@ import com.scholastic.intl.primedigital.api.v1.representations.QuizeResultType;
 import com.scholastic.intl.primedigital.api.v1.representations.UserType;
 import com.scholastic.intl.primedigital.api.v1.vo.ResponseVo;
 import com.scholastic.intl.primedigital.api.v1.vo.StudentQuizeResultVo;
+import com.scholastic.primedigital.data.model.Quize;
+import com.scholastic.primedigital.data.model.QuizeQuestion;
 import com.scholastic.primedigital.data.model.StudentQuizActivity;
 import com.scholastic.primedigital.data.model.StudentQuizActivityQuestions;
 
@@ -84,17 +86,17 @@ public class QuizResource {
 				QuizType quizType = new QuizType();
 				quizType.setQuizId(activity.getQuize().getId());
 				quizType.setQuizName(activity.getQuize().getName());
-				for (StudentQuizActivityQuestions question : activity.getQuestion() ) {
+				for (QuizeQuestion question : activity.getQuize().getQuestions() ) {
 						QuizQuestionsType questionsType = new QuizQuestionsType();
 						questionsType.setQuestionId(question.getId());
-						questionsType.setSequence(question.getSequence());
-						questionsType.setFilePath(question.getQuizQuestions().getFilePath());
-						questionsType.setJsonData(question.getQuizQuestions().getData());
-						questionsType.setComponets(question.getQuizQuestions().getComponets());
-						questionsType.setBookId(question.getQuizQuestions().getBookId());
-						questionsType.setChapterId(question.getQuizQuestions().getChapterId());
-						questionsType.setConceptId(question.getQuizQuestions().getConceptId());
-						questionsType.setCategoreyId(question.getQuizQuestions().getCategoreyId());
+						//questionsType.setSequence(question.getSequence());
+						questionsType.setFilePath(question.getFilePath());
+						questionsType.setJsonData(question.getData());
+						questionsType.setComponets(question.getComponets());
+						questionsType.setBookId(question.getBookId());
+						questionsType.setChapterId(question.getChapterId());
+						questionsType.setConceptId(question.getConceptId());
+						questionsType.setCategoreyId(question.getCategoreyId());
 						quizType.addquestionType(questionsType);
 				}
 				listquizetype.addQuizType(quizType);
