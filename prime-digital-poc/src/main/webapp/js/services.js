@@ -182,7 +182,7 @@ function playerServices($http, $q) {
             quizData.studentID = studentid;
             quizData.totalQuestion = testJSON.questions.length;
             var studentQuizData = getStudentQuizData(studentid, qid);
-            if (studentQuizData.status == 0) {
+            if (studentQuizData) {
                 quizData.ansArr = studentQuizData.ansArr;
                 quizData.resultArr = studentQuizData.resultArr;
                 quizData.resultQuestionObj = studentQuizData.resultQuestionObj;

@@ -6,11 +6,11 @@
     <div class="panel panel-default" ng-repeat="quiz in quizData">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="collapse(quiz.quizId)"><i class="fa fa-hand-o-right"></i> {{quiz.title}} <span class="badge pull-right" ng-if="studentQuizData[quiz.quizId].status == 0">{{studentQuizData[quiz.quizId].percentage}}%</span></a>
+                <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="collapse(quiz.quizId)"><i class="fa fa-hand-o-right"></i> {{quiz.title}} <span class="badge pull-right" ng-if="studentQuizData[quiz.quizId]">{{studentQuizData[quiz.quizId].percentage}}%</span></a>
             </h4>
         </div>
         
-        <div id="collapse{{quiz.quizId}}" class="panel-collapse" ng-show="accordion == '{{quiz.quizId}}'" ng-if="studentQuizData[quiz.quizId].status == 0">
+        <div id="collapse{{quiz.quizId}}" class="panel-collapse" ng-show="accordion == '{{quiz.quizId}}'" ng-if="studentQuizData[quiz.quizId]">
             <div class="panel-body" ng-if="studentQuizData[quiz.quizId].percentage < 100">
                 <div> <p>Following are the items from the Quiz that this student got it wrong.</p>
                 </div>
