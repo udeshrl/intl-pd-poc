@@ -31,7 +31,7 @@ import org.hibernate.annotations.BatchSize;
 	@NamedQuery(name = StudentQuizActivity.QUERY_FIND_ACTIVITY, 
 			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId AND SA.quize.id= :quizeId "),
 	@NamedQuery(name = StudentQuizActivity.QUERY_COMPLETED_ACTIVITY, 
-			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId AND SA.status :status"),
+			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId AND SA.status= :status"),
 	
 })
 public class StudentQuizActivity implements Serializable{
