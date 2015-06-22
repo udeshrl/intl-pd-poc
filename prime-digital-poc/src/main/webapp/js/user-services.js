@@ -37,8 +37,8 @@ function userServices($http, $q) {
     var getUserInfo = function (token) {
         var def = $q.defer();
         if (token == '') {
-            token = 'STUDENT2001'; // Default token
-//            token = 'TEACHER1001'; // Default token
+//            token = 'STUDENT2001'; // Default token
+            token = 'TEACHER1001'; // Default token
         }
         $http.get("data/mock/" + token + ".json")
                 .success(function (data) {
@@ -50,7 +50,7 @@ function userServices($http, $q) {
         return def.promise;
     }
 
-     /**
+    /**
      * @ngdoc function
      * @name fetchStudentsData
      * @description
@@ -62,7 +62,7 @@ function userServices($http, $q) {
         var def = $q.defer();
         $http.get("data/students.json")
                 .success(function (data) {
-                    students = data.students;
+                    students = data.classtype;
                     def.resolve(data);
                 })
                 .error(function () {
@@ -70,7 +70,7 @@ function userServices($http, $q) {
                 });
         return def.promise;
     }
-    
+
     /**
      * @ngdoc function
      * @name getAllStudents
@@ -82,9 +82,36 @@ function userServices($http, $q) {
     var getAllStudents = function () {
         return students;
     };
+
+    /**
+     * @ngdoc function
+     * @name getClassStudentInfo
+     * @description
+     *
+     * Return particular student info
+     * 
+     */
+    var getClassStudentInfo = function (cId, sId) {
+        var tempClassData = $.grep(students, function (e) {
+            return e.id == cId;
+        });
+        var studentInfo = false;
+        if (tempClassData.length > 0) {
+            var classData = tempClassData[0];
+            var tempStudentData = $.grep(classData.students, function (e) {
+                return e.id == sId;
+            });
+            if (tempStudentData.length > 0) {
+                studentInfo = tempStudentData[0];
+            }
+
+        }
+        return studentInfo;
+    };
     return {
         getUserInfo: getUserInfo,
         getAllStudents: getAllStudents,
-        fetchStudentsData: fetchStudentsData
+        fetchStudentsData: fetchStudentsData,
+        getClassStudentInfo: getClassStudentInfo
     };
 }

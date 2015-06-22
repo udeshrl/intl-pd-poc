@@ -110,16 +110,18 @@ function DashboardCtrl($rootScope, $scope, $location, playerServices) {
  * @param $routeParams sId  Student ID
  *
  */
-function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServices) {
+function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServices, userServices) {
 
     //Redirect to Student Dashboard if its Student looged in
     if ($rootScope.userInfo.role == 'student') {
         $location.path('/');
         return;
     }
-    // get Student ID from route Params
+    // get Student ID and Class ID from route Params
     var sId = $routeParams.sId;
-    $scope.studentInfo = $rootScope.allStudents[sId];  //Get Particualr student record
+    var cId = $routeParams.cId;
+  
+    $rootScope.studentInfo = userServices.getClassStudentInfo(cId,sId);  //Get Particualr student record
 
     //Get all quiz records
     playerServices.getQuizDataService(sId).then(function (data) {
@@ -138,8 +140,8 @@ function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServ
     $scope.accordion = 0;
 
     //Change Accordion collapse
-    $scope.collapse = function (testID, studentId) {
-        if ($scope.studentQuizData[studentId][testID]) {
+    $scope.collapse = function (testID) {
+        if ($scope.studentQuizData[testID]) {
             $scope.accordion = testID;
         }
     }
@@ -167,6 +169,13 @@ function TeacherDashboardCtrl($rootScope, $scope, $location, userServices) {
     }, function (data) {
         console.log('User retrieval failed.')
     });
+    
+    $scope.accordion = 0;
+    
+    //Change Accordion collapse
+    $scope.collapse = function (classID) {
+        $scope.accordion = classID;
+    }
 
 }
 
@@ -286,8 +295,7 @@ function QuestionCtrl($rootScope, $scope, $routeParams, $location, playerService
 
     if ($rootScope.userInfo.role == 'teacher') {
         var StudentID = playerServices.getStudentID();
-        var studentInfo = $rootScope.allStudents[StudentID];
-        $rootScope.studentName = studentInfo.first_name + ' ' + studentInfo.last_name;
+        $rootScope.studentName = $rootScope.studentInfo.first_name + ' ' + $rootScope.studentInfo.last_name;
     }
 
     $rootScope.quizTitle = playerServices.getQuizTitle();

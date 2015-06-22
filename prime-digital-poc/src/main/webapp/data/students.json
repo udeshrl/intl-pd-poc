@@ -1,34 +1,94 @@
 {
-    "students": {
-        "1": {
+    "classtype": [
+        {
+            "name": "Class 1",
             "id": "1",
-            "first_name": "Nicholas",
-            "last_name": "Barker",
-            "role": "student"
+            "students": [
+                {
+                    "id": "1",
+                    "first_name": "Nicholas",
+                    "last_name": "Barker",
+                    "role": "student"
+                },
+                {
+                    "id": "2",
+                    "first_name": "Randa",
+                    "last_name": "Seibel",
+                    "role": "student"
+                },
+                {
+                    "id": "3",
+                    "first_name": "Daphine",
+                    "last_name": "Soper",
+                    "role": "student"
+                },
+                {
+                    "id": "4",
+                    "first_name": "Vern",
+                    "last_name": "Roeser",
+                    "role": "student"
+                },
+                {
+                    "id": "5",
+                    "first_name": "Ryan",
+                    "last_name": "Rottman",
+                    "role": "student"
+                }
+            ]
         },
-        "2": {
+        {
+            "name": "Class 2",
             "id": "2",
-            "first_name": "Randa",
-            "last_name": "Seibel",
-            "role": "student"
+            "students": [
+                {
+                    "id": "1",
+                    "first_name": "Nicholas",
+                    "last_name": "Barker",
+                    "role": "student"
+                },
+                {
+                    "id": "4",
+                    "first_name": "Vern",
+                    "last_name": "Roeser",
+                    "role": "student"
+                },
+                {
+                    "id": "5",
+                    "first_name": "Ryan",
+                    "last_name": "Rottman",
+                    "role": "student"
+                }
+            ]
         },
-        "3": {
+        {
+            "name": "Class 3",
             "id": "3",
-            "first_name": "Daphine",
-            "last_name": "Soper",
-            "role": "student"
-        },
-        "4": {
-            "id": "4",
-            "first_name": "Vern",
-            "last_name": "Roeser",
-            "role": "student"
-        },
-        "5": {
-            "id": "5",
-            "first_name": "Ryan",
-            "last_name": "Rottman",
-            "role": "student"
+            "students": [
+                {
+                    "id": "1",
+                    "first_name": "Nicholas",
+                    "last_name": "Barker",
+                    "role": "student"
+                },
+                {
+                    "id": "3",
+                    "first_name": "Daphine",
+                    "last_name": "Soper",
+                    "role": "student"
+                },
+                {
+                    "id": "4",
+                    "first_name": "Vern",
+                    "last_name": "Roeser",
+                    "role": "student"
+                },
+                {
+                    "id": "5",
+                    "first_name": "Ryan",
+                    "last_name": "Rottman",
+                    "role": "student"
+                }
+            ]
         }
-    }
+    ]
 }

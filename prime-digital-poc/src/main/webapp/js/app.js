@@ -56,7 +56,7 @@ primeDigitalApp.config(['$routeProvider',
                     templateUrl: 'partials/teacher_dashboard.html',
                     controller: 'TeacherDashboardCtrl'
                 }).
-                when('/student/:sId', {
+                when('/student/:cId/:sId', {
                     templateUrl: 'partials/student_quiz.html',
                     controller: 'StudentQuizCtrl',
                     reloadOnSearch: false,

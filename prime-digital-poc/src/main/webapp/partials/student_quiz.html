@@ -6,7 +6,7 @@
     <div class="panel panel-default" ng-repeat="quiz in quizData">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="collapse(quiz.quizId)"><i class="fa fa-hand-o-right"></i> {{quiz.title}} <span class="badge pull-right" ng-if="studentQuizData[quiz.quizId]">{{studentQuizData[quiz.quizId].percentage}}%</span></a>
+                <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="collapse(quiz.quizId)"><i class="fa fa-hand-o-right"></i> {{quiz.quizName}} <span class="badge pull-right" ng-if="studentQuizData[quiz.quizId]">{{studentQuizData[quiz.quizId].percentage}}%</span></a>
             </h4>
         </div>
         
