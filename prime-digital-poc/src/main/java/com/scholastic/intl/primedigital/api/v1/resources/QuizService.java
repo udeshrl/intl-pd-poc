@@ -7,6 +7,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.scholastic.intl.api.primedigital.constants.PrimeDigitalConstants;
 import com.scholastic.primedigital.data.model.StudentQuizActivity;
 import com.scholastic.primedigital.data.model.User;
 
@@ -31,6 +32,23 @@ public class QuizService {
 			TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_ALL,
 					StudentQuizActivity.class);
 			query.setParameter("studentId", studentId);
+			List<StudentQuizActivity> activities = query.getResultList();
+			return activities;
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	
+	}
+	
+	
+	public List<StudentQuizActivity> getStudentCompletedQuizActivity(Integer studentId)  {
+		try{
+			TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_COMPLETED_ACTIVITY,
+					StudentQuizActivity.class);
+			query.setParameter("studentId", studentId);
+			query.setParameter("status", PrimeDigitalConstants.COMPLETED_QUIZ_ACTIVITY);
 			List<StudentQuizActivity> activities = query.getResultList();
 			return activities;
 			
