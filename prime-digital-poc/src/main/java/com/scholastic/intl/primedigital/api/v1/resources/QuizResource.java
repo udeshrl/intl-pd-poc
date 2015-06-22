@@ -17,10 +17,12 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.scholastic.intl.primedigital.api.v1.representations.ListQuizeResultType;
 import com.scholastic.intl.primedigital.api.v1.representations.ListQuizeType;
 import com.scholastic.intl.primedigital.api.v1.representations.ListUserType;
 import com.scholastic.intl.primedigital.api.v1.representations.QuizQuestionsType;
 import com.scholastic.intl.primedigital.api.v1.representations.QuizType;
+import com.scholastic.intl.primedigital.api.v1.representations.QuizeResultType;
 import com.scholastic.intl.primedigital.api.v1.representations.UserType;
 import com.scholastic.intl.primedigital.api.v1.vo.ResponseVo;
 import com.scholastic.intl.primedigital.api.v1.vo.StudentQuizeResultVo;
@@ -79,7 +81,7 @@ public class QuizResource {
 		List<StudentQuizActivity> studentActity = quizService.getStudentQuizActitiy(studentId);
 		for (StudentQuizActivity activity : studentActity) {
 				QuizType quizType = new QuizType();
-				quizType.setQuizId(activity.getId());
+				quizType.setQuizId(activity.getQuize().getId());
 				quizType.setQuizName(activity.getQuize().getName());
 				for (StudentQuizActivityQuestions question : activity.getQuestion() ) {
 						QuizQuestionsType questionsType = new QuizQuestionsType();
@@ -100,6 +102,32 @@ public class QuizResource {
 		
 		
 		return listquizetype;
+		
+	}
+	
+	@GET
+	@Path("/getquizeResultData/{studentId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public  ListQuizeResultType getQuizzeResult(@PathParam("studentId")Integer studentId) {
+		
+		List<StudentQuizActivity> studentActity = quizService.getStudentQuizActitiy(studentId);
+			
+		ListQuizeResultType listQuizeResult = new ListQuizeResultType();
+		
+		for (StudentQuizActivity activity : studentActity) {
+				QuizeResultType quizeResultType = new QuizeResultType();
+				quizeResultType.setQuizId(activity.getQuize().getId());
+				quizeResultType.setStudentId(activity.getStudentUser().getId());
+				quizeResultType.setResultArray(activity.getResultArray());
+				quizeResultType.setAnswerArray(activity.getAnswerArray());
+				quizeResultType.setResultQuestionObject(activity.getResultQuestionObject());
+				quizeResultType.setTotalQuestions(activity.getTotalNumberQuestionIssued());
+				quizeResultType.setCorrectAnswers(activity.getNumQuestionAnsweredCorrect());
+				quizeResultType.setPercentage(activity.getPercentage());
+				listQuizeResult.addQuizeResultType(quizeResultType);
+				
+		}
+		return listQuizeResult;
 		
 	}
 	
