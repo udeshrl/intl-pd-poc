@@ -111,7 +111,7 @@ public class QuizResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public  ListQuizeResultType getQuizzeResult(@PathParam("studentId")Integer studentId) {
 		
-		List<StudentQuizActivity> studentActity = quizService.getStudentQuizActitiy(studentId);
+		List<StudentQuizActivity> studentActity = quizService.getStudentCompletedQuizActivity(studentId);
 			
 		ListQuizeResultType listQuizeResult = new ListQuizeResultType();
 		
