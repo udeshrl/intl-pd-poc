@@ -17,8 +17,8 @@ public class StudentQuizeResultVo {
 	@JsonProperty("ID")
 	private String activityId;
 	
-	@XmlElement(name="testID")
-	@JsonProperty("testID")
+	@XmlElement(name="quizId")
+	@JsonProperty("quizId")
 	private Integer quizId;
 	
 	@XmlElement(name="studentID")
