@@ -166,11 +166,12 @@ function TeacherDashboardCtrl($rootScope, $scope, $location, userServices) {
     //Get all students records
     userServices.fetchStudentsData().then(function (data) {
         $rootScope.allStudents = userServices.getAllStudents();
+        $scope.accordion = $rootScope.allStudents[0].id;
     }, function (data) {
         console.log('User retrieval failed.')
     });
     
-    $scope.accordion = 0;
+    
     
     //Change Accordion collapse
     $scope.collapse = function (classID) {
