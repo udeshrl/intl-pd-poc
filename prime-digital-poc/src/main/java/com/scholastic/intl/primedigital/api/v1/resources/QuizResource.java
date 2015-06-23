@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.util.JSONPObject;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +28,12 @@ import com.scholastic.intl.primedigital.api.v1.representations.QuizeResultType;
 import com.scholastic.intl.primedigital.api.v1.representations.UserType;
 import com.scholastic.intl.primedigital.api.v1.vo.ResponseVo;
 import com.scholastic.intl.primedigital.api.v1.vo.StudentQuizeResultVo;
+import com.scholastic.primedigital.data.model.PDClass;
 import com.scholastic.primedigital.data.model.Quize;
 import com.scholastic.primedigital.data.model.QuizeQuestion;
 import com.scholastic.primedigital.data.model.StudentQuizActivity;
 import com.scholastic.primedigital.data.model.StudentQuizActivityQuestions;
+import com.scholastic.primedigital.data.model.User;
 
 
 /**
@@ -54,6 +57,27 @@ public class QuizResource {
 	@Path("/student")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ListUserType getQuizzes() {
+		
+		List<PDClass> tearcherclass =  quizService.getTeacherClass(1);
+		
+		
+		for (PDClass teacher: tearcherclass) {
+			
+			System.out.println("Teacher "+teacher.getClassName());
+			
+		//	Hibernate.initialize(teacher.getStudentUser());
+			
+			for (User studentUser : teacher.getStudentUser()) {
+				
+				System.out.println("Student User Id "+studentUser.getId());
+				System.out.println("Student User FristName "+studentUser.getFirst_name());
+				System.out.println("Student User FristName "+studentUser.getLast_name());
+				System.out.println("Student User FristName "+studentUser.getRole());
+				
+			}
+			
+		}
+		
 		ListUserType listUserType = new ListUserType();
 		UserType userType = new UserType();
 		userType.setFirst_name("dorababu");

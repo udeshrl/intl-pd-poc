@@ -7,7 +7,11 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Hibernate;
+
 import com.scholastic.intl.api.primedigital.constants.PrimeDigitalConstants;
+import com.scholastic.intl.primedigital.cammon.utill.PDAuthorizeMySqlDialect;
+import com.scholastic.primedigital.data.model.PDClass;
 import com.scholastic.primedigital.data.model.StudentQuizActivity;
 import com.scholastic.primedigital.data.model.User;
 
@@ -25,6 +29,14 @@ public class QuizService {
 	}
 	
 
+	public List<PDClass> getTeacherClass(Integer teacherId) {
+		
+		TypedQuery<PDClass> query = entityManager.createNamedQuery(PDClass.QUERY_ALL, PDClass.class);
+		query.setParameter("teacherId", teacherId);
+		List<PDClass> teacherClasses = query.getResultList();
+		return teacherClasses;
+		
+	}
 	
 	
 	public List<StudentQuizActivity> getStudentQuizActitiy(Integer studentId)  {

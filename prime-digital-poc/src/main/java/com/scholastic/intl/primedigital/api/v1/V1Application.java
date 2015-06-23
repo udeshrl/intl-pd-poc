@@ -8,6 +8,7 @@ import javax.ws.rs.core.Application;
 
 import com.scholastic.intl.primedigital.api.v1.providers.JacksonProvider;
 import com.scholastic.intl.primedigital.api.v1.resources.QuizResource;
+import com.scholastic.intl.primedigital.api.v1.resources.TeacherResource;
 
 
 /**
@@ -21,6 +22,8 @@ public class V1Application extends Application {
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<>();
 		classes.add(QuizResource.class);
+		classes.add(TeacherResource.class);
+		
 		// Providers
 		//classes.add(JacksonProvider.class);
 		return classes;
