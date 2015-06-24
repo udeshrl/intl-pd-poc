@@ -37,11 +37,41 @@ function userServices($http, $q) {
     var getUserInfo = function (token) {
         var def = $q.defer();
         if (token == '') {
-            token = 'STUDENT2001'; // Default token
-//            token = 'TEACHER1001'; // Default token
+//            token = 'STUDENT2001'; // Default token
+            token = 'TEACHER1001'; // Default token
         }
         $http.get("data/mock/" + token + ".json")
                 .success(function (data) {
+                    def.resolve(data);
+                })
+                .error(function () {
+                    def.reject("Failed to get User");
+                });
+        return def.promise;
+    }
+
+    /**
+     * @ngdoc function
+     * @name login
+     * @description
+     *
+     * Get User information from JSON
+     * 
+     * @param {string} token
+     * 
+     */
+    var login = function (username, password) {
+        var def = $q.defer();
+        $http.get("data/users.json")
+                .success(function (response) {
+                    var userInfo = {}, data = false;
+                    for (var i = 0, len = response.users.length; i < len; i++) {
+                        userInfo = response.users[i];
+                        if(userInfo.username == username && userInfo.username == password){
+                            data = userInfo;
+                            break;
+                        }
+                    }
                     def.resolve(data);
                 })
                 .error(function () {
@@ -58,16 +88,20 @@ function userServices($http, $q) {
      * Get all students record from JSON
      * 
      */
-    var fetchStudentsData = function () {
+    var fetchStudentsData = function (tid) {
         var def = $q.defer();
-        $http.get("data/students.json")
-                .success(function (data) {
-                    students = data.classtype;
-                    def.resolve(data);
-                })
-                .error(function () {
-                    def.reject("Failed to get User");
-                });
+        if (students.length > 0) {
+            def.resolve();
+        } else {
+            $http.get("api/v1/teacher/getteacherClasses/" + tid)
+                    .success(function (data) {
+                        students = data.classType;
+                        def.resolve(data);
+                    })
+                    .error(function () {
+                        def.reject("Failed to get User");
+                    });
+        }
         return def.promise;
     }
 
@@ -108,10 +142,76 @@ function userServices($http, $q) {
         }
         return studentInfo;
     };
+    /**
+     * @ngdoc function
+     * @name getClassStudents
+     * @description
+     *
+     * Return particular class Students
+     * 
+     */
+    var getClassStudents = function (cId) {
+        var tempClassData = $.grep(students, function (e) {
+            return e.id == cId;
+        });
+        var allStudents = [];
+        if (tempClassData.length > 0) {
+            if (tempClassData[0]['students'])
+                allStudents = tempClassData[0]['students'];
+        }
+        return allStudents;
+    };
+
+    /**
+     * @ngdoc function
+     * @name getUser
+     * @description
+     *
+     * get Loggedin user entry from local storage
+     * 
+     */
+    var getUser = function () {
+        if (!localStorage.user) {
+            return false;
+        }
+        return JSON.parse(localStorage.user);
+    };
+
+    /**
+     * @ngdoc function
+     * @name setUser
+     * @description
+     *
+     * Add Logged in user entry in Local Storage
+     * 
+     */
+    var setUser = function (user) {
+        localStorage.user = JSON.stringify(user);
+    };
+    
+    
+    /**
+     * @ngdoc function
+     * @name deleteUser
+     * @description
+     *
+     * Delete Logged in user entry from Local Storage
+     * 
+     */
+    var deleteUser = function () {
+        localStorage.removeItem('user');
+    };
+    
+
     return {
         getUserInfo: getUserInfo,
+        login: login,
         getAllStudents: getAllStudents,
         fetchStudentsData: fetchStudentsData,
-        getClassStudentInfo: getClassStudentInfo
+        getClassStudentInfo: getClassStudentInfo,
+        getUser: getUser,
+        setUser: setUser,
+        deleteUser: deleteUser,
+        getClassStudents: getClassStudents
     };
 }

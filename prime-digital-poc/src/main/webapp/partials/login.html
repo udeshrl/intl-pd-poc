@@ -1,0 +1,48 @@
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div ng-if="flashMessage" class="alert alert-{{flashMessage.type}}">
+            <i class="fa" ng-class="{'fa-exclamation-triangle' : flashMessage.type == 'danger', 'fa-check' : flashMessage.type == 'success'}"></i> {{flashMessage.text}}
+        </div>
+        <div class="panel panel-login">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12">
+                        Welcome To Prime Mathematics
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form name="loginForm" role="form" ng-submit="login()" novalidate style="display: block;">
+                            <div class="form-group">
+                                <input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" value="" ng-model="username" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" tabindex="2" min-length="6" class="form-control" placeholder="Password" ng-model="password" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <input type="submit" ng-disabled="loginForm.$invalid" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login btn-primary" value="Log In">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+    #author_content_container{display:none;}
+</style>

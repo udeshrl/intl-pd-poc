@@ -59,6 +59,32 @@ function playerServices($http, $q) {
 
         return def.promise;
     }
+    
+    /**
+     * @ngdoc function
+     * @name getQuizDataService
+     * @description
+     *
+     * Get All Quiz records from JSON
+     * 
+     */
+    var getQuizDataService = function (sId) {
+        var def = $q.defer();
+        if (allTestsJSON[sId]) {
+            def.resolve();
+        } else {
+            $http.get("api/v1/quizzes/getquizeData/" + sId)
+                    .success(function (data) {
+                        allTestsJSON[sId] = data.quizTypes;
+                        def.resolve(data);
+                    })
+                    .error(function () {
+                        def.reject("Failed to get Quiz");
+                    });
+        }
+
+        return def.promise;
+    }
 
     /**
      * @ngdoc function

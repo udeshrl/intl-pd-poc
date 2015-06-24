@@ -1,0 +1,53 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "username": "Nicholas",
+            "password": "Nicholas",
+            "first_name": "Nicholas",
+            "last_name": "Barker",
+            "role": "student"
+        },
+        {
+            "id": "2",
+            "username": "Randa",
+            "password": "Randa",
+            "first_name": "Randa",
+            "last_name": "Seibel",
+            "role": "student"
+        },
+        {
+            "id": "3",
+            "username": "Daphine",
+            "password": "Daphine",
+            "first_name": "Daphine",
+            "last_name": "Soper",
+            "role": "student"
+        },
+        {
+            "id": "4",
+            "username": "Vern",
+            "password": "Vern",
+            "first_name": "Vern",
+            "last_name": "Roeser",
+            "role": "student"
+        },
+        {
+            "id": "5",
+            "username": "Ryan",
+            "password": "Ryan",
+            "first_name": "Ryan",
+            "last_name": "Rottman",
+            "role": "student"
+        },
+        {
+            "id": "1",
+            "username": "Fernando",
+            "password": "Fernando",
+            "first_name": "Fernando",
+            "last_name": "Elzey",
+            "role": "teacher"
+        }
+    ]
+
+}

@@ -6,7 +6,7 @@
     <!--<a href="#" class="list-group-item active">Scholastic Test1</a>-->
     <ul class="student-list">
         <li ng-repeat="class in allStudents">
-            <span ng-click="collapse(class.id)" class="cursor-pointer"><i class="fa fa-group"></i> {{class.name}}</span> <a href=""><span class="badge pull-right">View Analysis</span></a>
+            <span ng-click="collapse(class.id)" class="cursor-pointer"><i class="fa fa-group"></i> {{class.name}}</span> <a href="#/report/{{class.id}}/"><span class="badge pull-right">View Analysis</span></a>
             <ul ng-if="class.students.length >  0" ng-show="accordion == '{{class.id}}'">
                 <li ng-repeat="student in class.students">
                     <a ng-href="#/student/{{class.id}}/{{student.id}}"><i class="fa fa-user icon-user"></i> {{student.first_name + ' ' + student.last_name}}</a>
