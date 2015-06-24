@@ -15,7 +15,7 @@
         var service = {};
 
         service.Login = Login;
-        service.ClearCredentials = ClearCredentials;
+        service.Logout = Logout;
 
         return service;
 
@@ -26,10 +26,11 @@
             userServices.login(username, password)
                     .then(function (user) {
                         if (user) {
-                            var authdata = Base64.encode(username + ':' + password);
-                            user.authdata = authdata;
-                            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                            var authToken = Base64.encode(username + ':' + password);
+                            user.authToken = authToken;
+                            $http.defaults.headers.common['Authorization'] = 'Basic ' + authToken; // jshint ignore:line
                             userServices.setUser(user);
+                            $rootScope.userInfo = user;
                             response = {success: true};
                         } else {
                             response = {success: false, message: 'Username or password is incorrect'};
@@ -41,7 +42,8 @@
 
 
 
-        function ClearCredentials() {
+        function Logout() {
+            userServices.deleteUser();
             $rootScope.userInfo = false;
             $http.defaults.headers.common.Authorization = 'Basic ';
         }

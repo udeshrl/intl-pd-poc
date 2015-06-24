@@ -38,7 +38,7 @@ primeDigitalControllers.controller('LoginCtrl', LoginCtrl);
  * @param searchParams token
  *
  */
-function appController($rootScope, $scope, $location, userServices, playerServices, appConstants) {
+function appController($rootScope, $scope, $location, AuthenticationService, appConstants) {
     
     $rootScope.flashMessage = false;
 
@@ -53,8 +53,7 @@ function appController($rootScope, $scope, $location, userServices, playerServic
     }
 
     $rootScope.logout = function () {
-        userServices.deleteUser();
-        $rootScope.userInfo = false;
+        AuthenticationService.Logout();
         $rootScope.flashMessage = { "text": "You have been successfully logged out", "type": "success"};
         $location.path('/login');
     }
