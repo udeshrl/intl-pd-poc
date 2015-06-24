@@ -12,6 +12,7 @@ import org.hibernate.Hibernate;
 import com.scholastic.intl.api.primedigital.constants.PrimeDigitalConstants;
 import com.scholastic.intl.primedigital.cammon.utill.PDAuthorizeMySqlDialect;
 import com.scholastic.primedigital.data.model.PDClass;
+import com.scholastic.primedigital.data.model.QuizeQuestion;
 import com.scholastic.primedigital.data.model.StudentQuizActivity;
 import com.scholastic.primedigital.data.model.User;
 
@@ -62,6 +63,15 @@ public class QuizService {
 			query.setParameter("studentId", studentId);
 			query.setParameter("status", PrimeDigitalConstants.COMPLETED_QUIZ_ACTIVITY);
 			List<StudentQuizActivity> activities = query.getResultList();
+			for (StudentQuizActivity question : activities) {
+				for (QuizeQuestion quest: question.getQuize().getQuestions()) {
+					Hibernate.initialize(quest.getBookQuestion());
+					Hibernate.initialize(quest.getChapterQuestion());
+					Hibernate.initialize(quest.getConceptQuestion());
+					Hibernate.initialize(quest.getTopicQuestion());
+				}
+				
+			}
 			return activities;
 			
 		}catch(Exception e){

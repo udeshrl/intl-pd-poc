@@ -1,13 +1,18 @@
 package com.scholastic.primedigital.data.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -48,6 +53,27 @@ public class QuizeQuestion implements Serializable {
 	
 	@Column(name = "componets", nullable = true, length = 500)
 	private String componets;
+	
+	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinTable( name="book_quiz_question", 
+	joinColumns={@JoinColumn(name="question_id")}, inverseJoinColumns={@JoinColumn(name="book_id")})
+	private List<Book> bookQuestion;
+	
+	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinTable( name="chapter_quiz_question", 
+	joinColumns={@JoinColumn(name="question_id")}, inverseJoinColumns={@JoinColumn(name="chapter_id")})
+	private List<Chapter> chapterQuestion;
+	
+	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinTable( name="concept_quiz_question", 
+	joinColumns={@JoinColumn(name="question_id")}, inverseJoinColumns={@JoinColumn(name="concept_id")})
+	private List<Concept> conceptQuestion;
+	
+	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinTable( name="topic_quiz_question", 
+	joinColumns={@JoinColumn(name="question_id")}, inverseJoinColumns={@JoinColumn(name="topic_id")})
+	private List<Topic> topicQuestion;
+	
 	
 
 	public Integer getId() {
@@ -120,6 +146,38 @@ public class QuizeQuestion implements Serializable {
 
 	public void setComponets(String componets) {
 		this.componets = componets;
+	}
+
+	public List<Book> getBookQuestion() {
+		return bookQuestion;
+	}
+
+	public void setBookQuestion(List<Book> bookQuestion) {
+		this.bookQuestion = bookQuestion;
+	}
+
+	public List<Chapter> getChapterQuestion() {
+		return chapterQuestion;
+	}
+
+	public void setChapterQuestion(List<Chapter> chapterQuestion) {
+		this.chapterQuestion = chapterQuestion;
+	}
+
+	public List<Concept> getConceptQuestion() {
+		return conceptQuestion;
+	}
+
+	public void setConceptQuestion(List<Concept> conceptQuestion) {
+		this.conceptQuestion = conceptQuestion;
+	}
+
+	public List<Topic> getTopicQuestion() {
+		return topicQuestion;
+	}
+
+	public void setTopicQuestion(List<Topic> topicQuestion) {
+		this.topicQuestion = topicQuestion;
 	}
 	
 	

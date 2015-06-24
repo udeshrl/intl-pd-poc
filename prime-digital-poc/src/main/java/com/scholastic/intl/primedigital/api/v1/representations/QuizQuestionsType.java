@@ -1,5 +1,8 @@
 package com.scholastic.intl.primedigital.api.v1.representations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,6 +23,10 @@ public class QuizQuestionsType {
 	private Integer conceptId;
 	private Integer categoreyId;
 	private String  componets;
+	private List<BookType> bookType;
+	private List<ChapterType> chapterType;
+	private List<ConceptType> conceptType;
+	private List<TopicType> topicType;
 	
 	
 	
@@ -78,9 +85,65 @@ public class QuizQuestionsType {
 	public void setComponets(String componets) {
 		this.componets = componets;
 	}
+	public List<BookType> getBookType() {
+		if (bookType == null) {
+			bookType = new ArrayList<BookType>();
+		}
+		return bookType;
+	}
+	public void setBookType(List<BookType> bookType) {
+		this.bookType = bookType;
+	}
+	public List<ChapterType> getChapterType() {
+		if (chapterType == null) {
+			chapterType = new ArrayList<ChapterType>();
+		}
+		return chapterType;
+	}
+	public void setChapterType(List<ChapterType> chapterType) {
+		this.chapterType = chapterType;
+	}
+	public List<ConceptType> getConceptType() {
+		if (conceptType == null) {
+			conceptType = new ArrayList<ConceptType>();
+		}
+		return conceptType;
+	}
+	public void setConceptType(List<ConceptType> conceptType) {
+		this.conceptType = conceptType;
+	}
+	public List<TopicType> getTopicType() {
+		if (topicType == null) {
+			topicType = new ArrayList<TopicType>();
+		}
+		return topicType;
+	}
+	public void setTopicType(List<TopicType> topicType) {
+		this.topicType = topicType;
+	}
+
+	public void addbookType(BookType bookType) {
+		if (bookType != null) {
+			getBookType().add(bookType);
+		}
+	}
 	
+	public void addchapterType(ChapterType chapterType) {
+		if (chapterType != null) {
+			getChapterType().add(chapterType);
+		}
+	}
 	
+	public void addconceptType(ConceptType conceptType) {
+		if (conceptType != null) {
+			getConceptType().add(conceptType);
+		}
+	}
 	
-	
+	public void addtopicType(TopicType topicType) {
+		if (topicType != null) {
+			getTopicType().add(topicType);
+		}
+	}
 
 }
