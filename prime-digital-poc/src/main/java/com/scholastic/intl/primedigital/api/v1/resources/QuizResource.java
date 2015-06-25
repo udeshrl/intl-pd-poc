@@ -180,8 +180,9 @@ public class QuizResource {
 	@Path("/getquizeResultData/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ListQuizeResultType getQuizzeResult(
-			@PathParam("studentId") Integer studentId) {
+			@PathParam("studentId") Integer studentId) throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
 
+		ut.begin();
 		List<StudentQuizActivity> studentActity = quizService
 				.getStudentCompletedQuizActivity(studentId);
 
@@ -203,6 +204,7 @@ public class QuizResource {
 			listQuizeResult.addQuizeResultType(quizeResultType);
 
 		}
+		ut.commit();
 		return listQuizeResult;
 
 	}
