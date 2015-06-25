@@ -10,24 +10,16 @@ import javax.persistence.TypedQuery;
 import org.hibernate.Hibernate;
 
 import com.scholastic.intl.api.primedigital.constants.PrimeDigitalConstants;
-import com.scholastic.intl.primedigital.cammon.utill.PDAuthorizeMySqlDialect;
 import com.scholastic.primedigital.data.model.PDClass;
 import com.scholastic.primedigital.data.model.QuizeQuestion;
 import com.scholastic.primedigital.data.model.StudentQuizActivity;
-import com.scholastic.primedigital.data.model.User;
 
 @Named
 public class QuizService {
 	
 	@Inject
 	EntityManager entityManager;
-	public void getStudentData(){
-		System.out.println("getStudentData");	
-		User user = entityManager.find( User.class, 1);
-		if(user != null){
-			System.out.println("***************************************"+user.getFirst_name());
-		}
-	}
+	
 	
 
 	public List<PDClass> getTeacherClass(Integer teacherId) {
@@ -80,6 +72,9 @@ public class QuizService {
 		}
 	
 	}
+	
+	
+
 	
 	
 	public StudentQuizActivity findStudentQuizActitiy(Integer studentId, Integer quizeId) {

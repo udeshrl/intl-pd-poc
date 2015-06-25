@@ -32,6 +32,8 @@ import org.hibernate.annotations.BatchSize;
 			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId AND SA.quize.id= :quizeId "),
 	@NamedQuery(name = StudentQuizActivity.QUERY_COMPLETED_ACTIVITY, 
 			query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id= :studentId AND SA.status= :status"),
+	@NamedQuery(name = StudentQuizActivity.QUERY_COMPLETED_ACTIVITES, 
+	query = "SELECT SA FROM StudentQuizActivity SA WHERE SA.studentUser.id IN (:studentIds) AND SA.status= :status"),
 	
 })
 public class StudentQuizActivity implements Serializable{
@@ -45,6 +47,7 @@ public class StudentQuizActivity implements Serializable{
 	public static final String QUERY_ALL = "studentQuizActivity.getStudentQuizActitiy";
 	public static final String QUERY_FIND_ACTIVITY = "studentQuizActivity.findStudentQuizActitiy";
 	public static final String QUERY_COMPLETED_ACTIVITY = "studentQuizActivity.getStudentCompletedQuizActivity";
+	public static final String QUERY_COMPLETED_ACTIVITES = "studentQuizActivity.getStudentCompletedQuizActivites";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
