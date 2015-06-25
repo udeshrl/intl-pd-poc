@@ -81,6 +81,7 @@
         <script src="js/filter.js"></script>
         <script src="js/services.js"></script>
         <script src="js/user-services.js"></script>
+        <script src="js/authentication.service.js"></script>
     </head>
     <body  ng-controller="appController">
         <header>
@@ -89,8 +90,8 @@
                     <div class="col-sm-6">
                         <a href="#/" title="{{appConstants.appName}}"><img class="logo" src="images/logo.png" alt="{{appConstants.appName}}"></a>
                     </div>
-                    <div class="col-sm-6 welcome-detail">
-                        Welcome {{userInfo.first_name}}
+                    <div class="col-sm-6 welcome-detail" ng-if="userInfo">
+                        Welcome {{userInfo.first_name}}, <a href="" ng-click="logout();" class="logout"><i class="fa fa-sign-out"></i> Logout</a>
                     </div>
                 </div>
             </div>

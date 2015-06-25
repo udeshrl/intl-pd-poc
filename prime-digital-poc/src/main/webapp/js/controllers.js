@@ -23,6 +23,8 @@ primeDigitalControllers.controller('QuizCtrl', QuizCtrl);
 primeDigitalControllers.controller('ResultCtrl', ResultCtrl);
 primeDigitalControllers.controller('QuestionCtrl', QuestionCtrl);
 primeDigitalControllers.controller('QuizSubmitConfirm', QuizSubmitConfirm);
+primeDigitalControllers.controller('ReportCtrl', ReportCtrl);
+primeDigitalControllers.controller('LoginCtrl', LoginCtrl);
 
 
 
@@ -36,27 +38,9 @@ primeDigitalControllers.controller('QuizSubmitConfirm', QuizSubmitConfirm);
  * @param searchParams token
  *
  */
-function appController($rootScope, $scope, $location, userServices, playerServices, appConstants) {
-    var searchParams = $location.search(), token = '';
-
-    //Check and set if token is passed
-    if (searchParams['token']) {
-        token = searchParams['token'];
-    }
-    /*
-     function getQueryStringValue(key) {
-     return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
-     }
-     token = getQueryStringValue('token');
-     */
-
-
-    //Get the Logged user information
-    userServices.getUserInfo(token).then(function (data) {
-        $rootScope.userInfo = data; // set User Information
-    }, function (data) {
-        console.log('User retrieval failed.')
-    });
+function appController($rootScope, $scope, $location, AuthenticationService, appConstants) {
+    
+    $rootScope.flashMessage = false;
 
     // Set App Constants
     $rootScope.appConstants = appConstants;
@@ -68,7 +52,52 @@ function appController($rootScope, $scope, $location, userServices, playerServic
         return Object.keys(obj);
     }
 
+    $rootScope.logout = function () {
+        AuthenticationService.Logout();
+        $rootScope.flashMessage = { "text": "You have been successfully logged out", "type": "success"};
+        $location.path('/login');
+    }
+
+
+
 }
+
+
+/**
+ * @ngdoc controller
+ * @name LoginCtrl
+ * @description
+ *
+ * Login Controller
+ * 
+ */
+function LoginCtrl($rootScope, $scope, $location, userServices, AuthenticationService) {
+
+    $scope.login = function () {
+        $rootScope.flashMessage = false;
+        AuthenticationService.Login($scope.username, $scope.password, function (response) {
+            if (response.success) {
+                $scope.username = '';
+                $scope.password = '';
+                $rootScope.userInfo = userServices.getUser();
+                if ($rootScope.userInfo.role == 'teacher') {
+                    $location.path('/dashboard');
+                } else {
+                    $location.path('/');
+                }
+            } else {
+                $rootScope.flashMessage = { "text": response.message, "type": "danger"};
+            }
+        });
+    }
+    /**
+     * On View change
+     */
+    $scope.$on('$routeChangeStart', function (next, current) {
+        $rootScope.flashMessage = false;
+    });
+}
+
 
 /**
  * @ngdoc controller
@@ -120,8 +149,8 @@ function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServ
     // get Student ID and Class ID from route Params
     var sId = $routeParams.sId;
     var cId = $routeParams.cId;
-  
-    $rootScope.studentInfo = userServices.getClassStudentInfo(cId,sId);  //Get Particualr student record
+
+    $rootScope.studentInfo = userServices.getClassStudentInfo(cId, sId);  //Get Particualr student record
 
     //Get all quiz records
     playerServices.getQuizDataService(sId).then(function (data) {
@@ -147,6 +176,40 @@ function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServ
     }
 }
 
+/**
+ * @ngdoc controller
+ * @name ReportCtrl
+ * @description
+ *
+ * To Show report for particular class
+ * 
+ * @param $routeParams cId  Class ID
+ *
+ */
+function ReportCtrl($rootScope, $routeParams, $scope, $location, playerServices, userServices) {
+
+    //Redirect to Student Dashboard if its Student looged in
+    if ($rootScope.userInfo.role == 'student') {
+        $location.path('/');
+        return;
+    }
+    // get Class ID from route Params
+    var cId = $routeParams.cId, sId;
+
+    var classStudents = $rootScope.classStudents = userServices.getClassStudents(cId);  //Get Particualr student record
+
+    for (var i = 0; i < classStudents.length; i++) {
+        sId = classStudents[i].id;
+        //Get all quiz records
+        playerServices.getQuizDataService(sId).then(function (data) {
+            console.log("Hi");
+            console.log(sId);
+        }, function (data) {
+            console.log('Quiz retrieval failed.')
+        });
+    }
+}
+
 
 /**
  * @ngdoc controller
@@ -164,15 +227,15 @@ function TeacherDashboardCtrl($rootScope, $scope, $location, userServices) {
         return;
     }
     //Get all students records
-    userServices.fetchStudentsData().then(function (data) {
+    userServices.fetchStudentsData($rootScope.userInfo.id).then(function (data) {
         $rootScope.allStudents = userServices.getAllStudents();
         $scope.accordion = $rootScope.allStudents[0].id;
     }, function (data) {
         console.log('User retrieval failed.')
     });
-    
-    
-    
+
+
+
     //Change Accordion collapse
     $scope.collapse = function (classID) {
         $scope.accordion = classID;

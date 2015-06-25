@@ -17,6 +17,7 @@ var primeDigitalApp = angular.module('primeDigitalApp', [
     'primeDigitalControllers',
     'primeDigitalFilters',
     'primeDigitalUserServices',
+    'AuthenticationServiceProvider',
     'primeDigitalPlayer'
 ]);
 
@@ -40,30 +41,91 @@ primeDigitalApp.config(['$routeProvider',
         $routeProvider.
                 when('/quiz/:quizId/:sId', {
                     templateUrl: 'partials/quiz.html',
-                    controller: 'QuizCtrl'
+                    controller: 'QuizCtrl',
+                    data: {
+                        requireLogin: true
+                    }
                 }).
                 when('/result', {
                     templateUrl: 'partials/result.html',
-                    controller: 'ResultCtrl'
+                    controller: 'ResultCtrl',
+                    data: {
+                        requireLogin: true
+                    }
                 }).
                 when('/question/:qId', {
                     templateUrl: 'partials/question.html',
                     controller: 'QuestionCtrl',
-                    reloadOnSearch: false,
-                    abstract: true,
+                    data: {
+                        requireLogin: true
+                    }
                 }).
                 when('/dashboard', {
                     templateUrl: 'partials/teacher_dashboard.html',
-                    controller: 'TeacherDashboardCtrl'
+                    controller: 'TeacherDashboardCtrl',
+                    data: {
+                        requireLogin: true
+                    }
                 }).
                 when('/student/:cId/:sId', {
                     templateUrl: 'partials/student_quiz.html',
                     controller: 'StudentQuizCtrl',
-                    reloadOnSearch: false,
-                    abstract: true,
+                    data: {
+                        requireLogin: true
+                    }
                 }).
-                otherwise({
+                when('/report/:cId', {
+                    templateUrl: 'partials/report.html',
+                    controller: 'ReportCtrl',
+                    data: {
+                        requireLogin: true
+                    }
+                }).
+                when('/', {
                     templateUrl: 'partials/student_dashboard.html',
-                    controller: 'DashboardCtrl'
-                });
+                    controller: 'DashboardCtrl',
+                    data: {
+                        requireLogin: true
+                    }
+                }).
+                when('/login', {
+                    templateUrl: 'partials/login.html',
+                    controller: 'LoginCtrl',
+                    data: {
+                        requireLogin: false
+                    }
+                }).
+                otherwise({redirectTo: '/login'});
+    }]);
+
+/**
+ *  
+ */
+primeDigitalApp.run(['$rootScope', '$location', '$http','userServices',
+    function ($rootScope, $location, $http, userServices) {
+        
+        $rootScope.userInfo = userServices.getUser();
+        
+        // keep user logged in after page refresh
+        if ($rootScope.userInfo) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.userInfo.authToken; // jshint ignore:line
+        }
+
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+            var requireLogin = next.data.requireLogin;
+            // redirect to login page if not logged in and trying to access a restricted page
+            var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
+            
+            var loggedIn = $rootScope.userInfo;
+            if (!loggedIn && requireLogin) {
+                $rootScope.flashMessage = { "text": "Please login ", "type": "danger"};
+                $location.path('/login');
+            }else if(!restrictedPage && loggedIn){
+                if($rootScope.userInfo.role == 'teacher'){
+                    $location.path('/dashboard');
+                }else{
+                    $location.path('/');
+                }
+            }
+        });
     }]);
