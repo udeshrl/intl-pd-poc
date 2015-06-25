@@ -16,7 +16,6 @@ public class TeacherService {
 	EntityManager entityManager;
 	
 	public List<PDClass> getTeacherClass(Integer teacherId) {
-			
 			TypedQuery<PDClass> query = entityManager.createNamedQuery(PDClass.QUERY_ALL, PDClass.class);
 			query.setParameter("teacherId", teacherId);
 			List<PDClass> teacherClasses = query.getResultList();

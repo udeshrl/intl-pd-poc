@@ -33,23 +33,16 @@ public class QuizService {
 	
 	
 	public List<StudentQuizActivity> getStudentQuizActitiy(Integer studentId)  {
-		try{
 			TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_ALL,
 					StudentQuizActivity.class);
 			query.setParameter("studentId", studentId);
 			List<StudentQuizActivity> activities = query.getResultList();
 			return activities;
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	
 	}
 	
 	
 	public List<StudentQuizActivity> getStudentCompletedQuizActivity(Integer studentId)  {
-		try{
+		
 			TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_COMPLETED_ACTIVITY,
 					StudentQuizActivity.class);
 			query.setParameter("studentId", studentId);
@@ -65,26 +58,17 @@ public class QuizService {
 				
 			}
 			return activities;
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
 	
 	}
 	
-	
 
-	
-	
 	public StudentQuizActivity findStudentQuizActitiy(Integer studentId, Integer quizeId) {
 		
-		TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_FIND_ACTIVITY,
-				StudentQuizActivity.class);
-		query.setParameter("studentId", studentId);
-		query.setParameter("quizeId", quizeId);
-		
-		return query.getSingleResult();
+			TypedQuery<StudentQuizActivity> query = entityManager.createNamedQuery(StudentQuizActivity.QUERY_FIND_ACTIVITY,
+					StudentQuizActivity.class);
+			query.setParameter("studentId", studentId);
+			query.setParameter("quizeId", quizeId);
+			return query.getSingleResult();
 	}
 
 }

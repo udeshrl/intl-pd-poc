@@ -24,27 +24,24 @@ public class TeacherResource {
 	@GET
 	@Path("/getteacherClasses/{teacherId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ListCalssType getTeacherClassesData(
-			@PathParam("teacherId") Integer teacherId) {
-
-		ListCalssType listClassType = new ListCalssType();
-		List<PDClass> tearcherclass = teacherService.getTeacherClass(teacherId);
-		for (PDClass classes : tearcherclass) {
-			ClassType classType = new ClassType();
-			classType.setId(classes.getId());
-			classType.setName(classes.getClassName());
-			for (User studentUser : classes.getStudentUser()) {
-				UserType userType = new UserType();
-				userType.setId(studentUser.getId());
-				userType.setFirst_name(studentUser.getFirst_name());
-				userType.setLast_name(studentUser.getLast_name());
-				userType.setRole(studentUser.getRole());
-				classType.addUserType(userType);
-				// userType.set
+	public ListCalssType getTeacherClassesData(@PathParam("teacherId") Integer teacherId) {
+			ListCalssType listClassType = new ListCalssType();
+			List<PDClass> tearcherclass = teacherService.getTeacherClass(teacherId);
+			for (PDClass classes : tearcherclass) {
+				ClassType classType = new ClassType();
+				classType.setId(classes.getId());
+				classType.setName(classes.getClassName());
+				for (User studentUser : classes.getStudentUser()) {
+					UserType userType = new UserType();
+					userType.setId(studentUser.getId());
+					userType.setFirst_name(studentUser.getFirst_name());
+					userType.setLast_name(studentUser.getLast_name());
+					userType.setRole(studentUser.getRole());
+					classType.addUserType(userType);
+				}
+				listClassType.addClassType(classType);
 			}
-			listClassType.addClassType(classType);
+			return listClassType;
 		}
-		return listClassType;
-	}
 
 }
