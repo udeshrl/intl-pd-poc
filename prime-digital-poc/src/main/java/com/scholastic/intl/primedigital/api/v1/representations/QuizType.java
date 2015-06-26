@@ -51,7 +51,5 @@ public class QuizType {
 	public void setQuizName(String quizName) {
 		this.quizName = quizName;
 	}
-	
-	
 
 }

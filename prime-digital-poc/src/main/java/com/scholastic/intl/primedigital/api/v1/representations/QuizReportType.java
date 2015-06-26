@@ -1,7 +1,6 @@
 package com.scholastic.intl.primedigital.api.v1.representations;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,7 +16,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 public class QuizReportType {
 	
 	private Integer studentId;
-	
 	private List<ListQuizeType> lstquizTypes;
 	private List<ListQuizeResultType> lstquizResultType;
 	
@@ -66,11 +64,5 @@ public class QuizReportType {
 	public void setStudentId(Integer studentId) {
 		this.studentId = studentId;
 	}
-	
-	
-	
-	
-	
-	
 
 }

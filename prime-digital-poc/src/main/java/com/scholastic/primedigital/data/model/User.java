@@ -7,18 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 /**
  * @author dora.babu
  *
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints=@UniqueConstraint(columnNames={"user_name"}))
+@NamedQueries({ 
+	@NamedQuery(name = User.QUERY_FIND_USER, 
+			query = "SELECT uN FROM User uN WHERE uN.userName = :userName")
+		
+})
 public class User  implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
+	
+	public final static String QUERY_FIND_USER = "user.findUser";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +40,17 @@ public class User  implements Serializable {
 	
 	@Column(name = "role", length = 255)
 	private String role;
+	
+	@Column(name = "user_name",length = 255)
+	private String userName;
+	
+	@Column(name = "password",length = 255)
+	private String password;
+	
+	@Column(name = "email",length = 255)
+	private String email;
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -64,6 +83,32 @@ public class User  implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 	
 	
 

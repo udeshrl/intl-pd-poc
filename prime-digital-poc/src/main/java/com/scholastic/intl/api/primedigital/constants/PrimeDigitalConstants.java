@@ -7,6 +7,8 @@ public class PrimeDigitalConstants {
 	public static final String RESULT = "Result";
 	
 	public static final Integer COMPLETED_QUIZ_ACTIVITY = 0;
+	
+	public static final String USER ="USER";
 
 
 }

@@ -2,31 +2,25 @@ package com.scholastic.intl.primedigital.api.v1.providers;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
+
 import org.jboss.resteasy.plugins.providers.jackson.ResteasyJacksonProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Date: 7/3/13
- * 
- * @author T. Curran
- * 
- *         Warning: extends ResteasyJacksonProvider making this only work with
- *         RestEasy For CXF and Jersey, simply extend ObjectMapper
- */
 @Provider
 @Consumes({ MediaType.APPLICATION_JSON, "text/json" })
 @Produces({ MediaType.APPLICATION_JSON, "text/json" })
 public class JacksonProvider extends ResteasyJacksonProvider {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JacksonProvider.class);
-
+	
 	@Context
 	private HttpServletRequest request;
 

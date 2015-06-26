@@ -6,15 +6,10 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import com.scholastic.intl.primedigital.api.v1.providers.JacksonProvider;
 import com.scholastic.intl.primedigital.api.v1.resources.QuizResource;
 import com.scholastic.intl.primedigital.api.v1.resources.TeacherResource;
+import com.scholastic.intl.primedigital.api.v1.resources.UserLoginResource;
 
-
-/**
- * @author dora.babu
- *
- */
 @ApplicationPath("/api/v1")
 public class V1Application extends Application {
 
@@ -23,9 +18,7 @@ public class V1Application extends Application {
 		Set<Class<?>> classes = new HashSet<>();
 		classes.add(QuizResource.class);
 		classes.add(TeacherResource.class);
-		
-		// Providers
-		//classes.add(JacksonProvider.class);
+		classes.add(UserLoginResource.class);
 		return classes;
 	}
 }
