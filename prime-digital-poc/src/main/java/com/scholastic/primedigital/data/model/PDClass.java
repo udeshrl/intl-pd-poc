@@ -42,7 +42,7 @@ public class PDClass implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "teacher_id")
-	private  Teacher teacher; 
+	private  User teacher; 
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "calss_students",
@@ -67,11 +67,13 @@ public class PDClass implements Serializable {
 		this.className = className;
 	}
 
-	public Teacher getTeacher() {
+	
+	
+	public User getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
+	public void setTeacher(User teacher) {
 		this.teacher = teacher;
 	}
 
