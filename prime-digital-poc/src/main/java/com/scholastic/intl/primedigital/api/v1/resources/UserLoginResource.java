@@ -29,8 +29,8 @@ public class UserLoginResource {
 				usrVo.setId(user.getId());
 				usrVo.setUser_name(user.getUserName());
 				//usrVo.setPassword(user.getPassword());
-				usrVo.setFristName(user.getFirst_name());
-				usrVo.setLastName(user.getLast_name());
+				usrVo.setFirst_name(user.getFirst_name());
+				usrVo.setLast_name(user.getLast_name());
 				usrVo.setEmail(user.getEmail());
 				usrVo.setRole(user.getRole());
 			}

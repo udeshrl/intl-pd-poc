@@ -25,13 +25,13 @@ public class UserVo {
 	@JsonProperty("id")
 	private Integer id;
 	
-	@XmlElement(name="fristName")
-	@JsonProperty("fristName")
-	private String fristName;
+	@XmlElement(name="first_name")
+	@JsonProperty("first_name")
+	private String first_name;
 	
-	@XmlElement(name="lastName")
-	@JsonProperty("lastName")
-	private String lastName;
+	@XmlElement(name="last_name")
+	@JsonProperty("last_name")
+	private String last_name;
 	
 	@XmlElement(name="role")
 	@JsonProperty("role")
@@ -59,20 +59,20 @@ public class UserVo {
 		this.password = password;
 	}
 
-	public String getFristName() {
-		return fristName;
+	public String getFirst_name() {
+		return first_name;
 	}
 
-	public void setFristName(String fristName) {
-		this.fristName = fristName;
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLast_name() {
+		return last_name;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
 	}
 
 	public String getRole() {
