@@ -62,21 +62,40 @@ function userServices($http, $q) {
      */
     var login = function (username, password) {
         var def = $q.defer();
-        $http.get("data/users.json")
-                .success(function (response) {
-                    var userInfo = {}, data = false;
-                    for (var i = 0, len = response.users.length; i < len; i++) {
-                        userInfo = response.users[i];
-                        if(userInfo.username == username && userInfo.username == password){
-                            data = userInfo;
-                            break;
-                        }
-                    }
+
+        $http({
+            method: 'POST', // support GET, POST, PUT, DELETE
+            url: 'api/v1/userLogin/userAuthentication',
+            data: {user_name: username, password: password},
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            timeout: 30000, // timeout abort AJAX
+            cache: false
+        }).
+                success(function (data) {
                     def.resolve(data);
-                })
-                .error(function () {
+                }).
+                error(function (data) {
                     def.reject("Failed to get User");
                 });
+
+
+//        $http.get("data/users.json")
+//                .success(function (response) {
+//                    var userInfo = {}, data = false;
+//                    for (var i = 0, len = response.users.length; i < len; i++) {
+//                        userInfo = response.users[i];
+//                        if (userInfo.username == username && userInfo.username == password) {
+//                            data = userInfo;
+//                            break;
+//                        }
+//                    }
+//                    def.resolve(data);
+//                })
+//                .error(function () {
+//                    def.reject("Failed to get User");
+//                });
         return def.promise;
     }
 
@@ -188,8 +207,8 @@ function userServices($http, $q) {
     var setUser = function (user) {
         localStorage.user = JSON.stringify(user);
     };
-    
-    
+
+
     /**
      * @ngdoc function
      * @name deleteUser
@@ -201,7 +220,7 @@ function userServices($http, $q) {
     var deleteUser = function () {
         localStorage.removeItem('user');
     };
-    
+
 
     return {
         getUserInfo: getUserInfo,
