@@ -20,7 +20,7 @@ primeDigitalPlayer.factory('playerServices', playerServices);
  * 
  */
 function playerServices($http, $q) {
-    var allTestsJSON = {}, testJSON = {}, allStudentQuizData = {};
+    var allTestsJSON = {}, testJSON = {}, allStudentQuizData = {}, reportData = {};
 
     var quizData = {
         studentID: '',
@@ -59,32 +59,131 @@ function playerServices($http, $q) {
 
         return def.promise;
     }
-    
+
     /**
      * @ngdoc function
-     * @name getQuizDataService
+     * @name getClassReportData
      * @description
      *
-     * Get All Quiz records from JSON
+     * generate topic based Report
      * 
      */
-    var getQuizDataService = function (sId) {
-        var def = $q.defer();
-        if (allTestsJSON[sId]) {
-            def.resolve();
+    var getClassReportData = function (classStudents, cId) {
+        var def = $q.defer(), students = [], sId, $this = this, reprot = {};
+        if (reportData[cId]) {
+            reprot = reportData[cId];
+            def.resolve(reprot);
         } else {
-            $http.get("api/v1/quizzes/getquizeData/" + sId)
-                    .success(function (data) {
-                        allTestsJSON[sId] = data.quizTypes;
-                        def.resolve(data);
-                    })
-                    .error(function () {
-                        def.reject("Failed to get Quiz");
-                    });
-        }
+            $.each(classStudents, function (index, value) {
+                sId = value.id;
+                var quizData = $this.getAllQuizData(sId);
+                var resultData = $this.getAllStudentQuizData(sId);
+                if (!quizData || !resultData) {
+                    students.push(sId);
+                }
+            });
+            if (students.length > 0) {
+                $http({
+                    method: 'GET', // support GET, POST, PUT, DELETE
+                    url: 'api/v1/quizzes/getQuizeReport/' + students.join(),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    },
+                    timeout: 30000, // timeout abort AJAX
+                    cache: false
+                }).
+                        success(function (data) {
+                            $.each(data.quizeReportType, function (index, value) {
+                                sId = value.studentId;
+                                allStudentQuizData[sId] = parseStudentQuizResult(value.lstquizResultType[0].quizResultType);
+                                allTestsJSON[sId] = value.lstquizTypes[0].quizTypes;
 
+                            });
+                            reportData[cId] = reprot = $this.generateReport(classStudents);
+                            setTimeout(function () {
+                                def.resolve(reprot);
+                            }, 6000);
+
+                        }).
+                        error(function (data) {
+                            def.reject("Failed to get Quiz");
+                        });
+
+            } else {
+                reportData[cId] = reprot = this.generateReport(classStudents);
+                def.resolve(reprot);
+            }
+        }
         return def.promise;
     }
+
+    /**
+     * @ngdoc function
+     * @name generateReport
+     * @description
+     *
+     * generate topic based Report
+     * 
+     */
+    var generateReport = function (classStudents) {
+        var $this = this, report = {}, sId, quizData, resultData, questions = [], qId, questionIndex, topic, topicReport = {}, studentTopic = {}, correct = false;
+
+        $.each(classStudents, function (index, value) {
+            sId = value.id;
+            quizData = $this.getAllQuizData(sId);
+            resultData = $this.getAllStudentQuizData(sId);
+
+            $.each(quizData, function (index, value) {
+                qId = value.quizId;
+                if (resultData[qId]) {
+                    questions = value.questions;
+                    $.each(questions, function (index, value) {
+                        questionIndex = index;
+                        topic = value.topicType[0];
+                        if (typeof topic != 'undefined') {
+                            correct = resultData[qId].resultQuestionObj[questionIndex];
+                            if (report[topic.id]) {
+                                topicReport = report[topic.id];
+                                if (topicReport.students[sId]) {
+                                    studentTopic = topicReport.students[sId];
+
+                                } else {
+                                    studentTopic = {
+                                        "correct": 0,
+                                        "total": 0
+                                    };
+                                }
+                                if (correct) {
+                                    studentTopic.correct++;
+                                }
+                                studentTopic.total++;
+                                topicReport.students[sId] = studentTopic;
+                            } else {
+                                topicReport = topic;
+                                topicReport.students = {};
+                                studentTopic = {
+                                    "correct": 0,
+                                    "total": 0
+                                };
+                                if (correct) {
+                                    studentTopic.correct++;
+                                }
+                                studentTopic.total++;
+                                topicReport.students[sId] = studentTopic;
+
+                            }
+                            report[topic.id] = topicReport;
+
+                        }
+                    });
+                }
+
+            });
+        });
+
+        return report;
+    };
+
 
     /**
      * @ngdoc function
@@ -734,6 +833,8 @@ function playerServices($http, $q) {
         parseStudentQuizResult: parseStudentQuizResult,
         getResultArr: getResultArr,
         getAllStudentQuizData: getAllStudentQuizData,
+        getClassReportData: getClassReportData,
+        generateReport: generateReport,
         getResult: getResult
     };
 }

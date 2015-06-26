@@ -10,6 +10,7 @@ var primeDigitalFilters = angular.module('primeDigitalFilters', []);
 primeDigitalFilters.filter('renderHTMLCorrectly', renderHTMLCorrectly);
 primeDigitalFilters.filter('isEmpty', isEmpty);
 primeDigitalFilters.filter('length', length);
+primeDigitalFilters.filter('setDecimal', setDecimal);
 
 
 /**
@@ -70,4 +71,34 @@ function length() {
     return function (obj) {
         return Object.keys(obj).length
     };
+}
+
+/**
+ * @ngdoc Filter
+ * @name setDecimal
+ * @description
+ *
+ * To set decimal values
+ * 
+ * @param input
+ * @param places
+ * 
+ * @return {number}
+ *
+ */
+
+
+function setDecimal() {
+  return function(input, places) {
+    input = parseFloat(input);
+    places = parseFloat(places);
+    if (input > Math.floor(input)) { //check the decimal place
+        input = input.toFixed(places);
+    }
+    else {
+        input = input.toFixed();
+    }
+    return input;
+    
+  };
 }

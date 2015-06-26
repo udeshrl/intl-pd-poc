@@ -21,7 +21,7 @@
                     
                     <ul class="pagination">
                        
-                        <li ng-repeat="newkey in notSorted(studentQuizData[quiz.quizId].resultQuestionObj)" ng-init="result = [studentInfo.id][quiz.quizId].resultQuestionObj[newkey]"><span ng-if="!result"><a ng-href="#/quiz/{{quiz.quizId}}/{{studentInfo.id}}?q={{$index}}">{{$index + 1}}</a></span></li>
+                        <li ng-repeat="newkey in notSorted(studentQuizData[quiz.quizId].resultQuestionObj)" ng-init="result = studentQuizData[quiz.quizId].resultQuestionObj[newkey]"><span ng-if="!result"><a ng-href="#/quiz/{{quiz.quizId}}/{{studentInfo.id}}?q={{$index}}">{{$index + 1}}</a></span></li>
                     </ul>
                 </div>
             </div>

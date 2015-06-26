@@ -39,7 +39,7 @@ primeDigitalControllers.controller('LoginCtrl', LoginCtrl);
  *
  */
 function appController($rootScope, $scope, $location, AuthenticationService, appConstants) {
-    
+
     $rootScope.flashMessage = false;
 
     // Set App Constants
@@ -54,8 +54,8 @@ function appController($rootScope, $scope, $location, AuthenticationService, app
 
     $rootScope.logout = function () {
         AuthenticationService.Logout();
-        $rootScope.flashMessage = { "text": "You have been successfully logged out", "type": "success"};
-        $location.path('/login');
+        $rootScope.flashMessage = {"text": "You have been successfully logged out", "type": "success"};
+        $location.path('login');
     }
 
 
@@ -81,12 +81,12 @@ function LoginCtrl($rootScope, $scope, $location, userServices, AuthenticationSe
                 $scope.password = '';
                 $rootScope.userInfo = userServices.getUser();
                 if ($rootScope.userInfo.role == 'teacher') {
-                    $location.path('/dashboard');
+                    $location.path('dashboard');
                 } else {
-                    $location.path('/');
+                    $location.path('');
                 }
             } else {
-                $rootScope.flashMessage = { "text": response.message, "type": "danger"};
+                $rootScope.flashMessage = {"text": response.message, "type": "danger"};
             }
         });
     }
@@ -110,7 +110,7 @@ function LoginCtrl($rootScope, $scope, $location, userServices, AuthenticationSe
 function DashboardCtrl($rootScope, $scope, $location, playerServices) {
     //Redirect to Teacher Dashboard if its Teacher looged in
     if ($rootScope.userInfo.role == 'teacher') {
-        $location.path('/dashboard/');
+            $location.path('dashboard');
         return;
     }
     //Get all quiz records
@@ -143,7 +143,7 @@ function StudentQuizCtrl($rootScope, $routeParams, $scope, $location, playerServ
 
     //Redirect to Student Dashboard if its Student looged in
     if ($rootScope.userInfo.role == 'student') {
-        $location.path('/');
+        $location.path('');
         return;
     }
     // get Student ID and Class ID from route Params
@@ -190,24 +190,25 @@ function ReportCtrl($rootScope, $routeParams, $scope, $location, playerServices,
 
     //Redirect to Student Dashboard if its Student looged in
     if ($rootScope.userInfo.role == 'student') {
-        $location.path('/');
+        $location.path('');
         return;
     }
+
+    $scope.loading = true;
+
     // get Class ID from route Params
-    var cId = $routeParams.cId, sId;
+    var cId = $routeParams.cId, classStudents;
 
-    var classStudents = $rootScope.classStudents = userServices.getClassStudents(cId);  //Get Particualr student record
+    $scope.classStudents = classStudents = $rootScope.classStudents = userServices.getClassStudents(cId);  //Get Particualr student record
 
-    for (var i = 0; i < classStudents.length; i++) {
-        sId = classStudents[i].id;
-        //Get all quiz records
-        playerServices.getQuizDataService(sId).then(function (data) {
-            console.log("Hi");
-            console.log(sId);
-        }, function (data) {
-            console.log('Quiz retrieval failed.')
-        });
-    }
+    //Get all student Quiz records
+    playerServices.getClassReportData(classStudents,cId).then(function (data) {
+        $scope.reportData = data;
+        $scope.loading = false;
+    }, function (data) {
+        console.log('student quiz retrieval failed.')
+    });
+
 }
 
 
@@ -223,7 +224,7 @@ function ReportCtrl($rootScope, $routeParams, $scope, $location, playerServices,
 function TeacherDashboardCtrl($rootScope, $scope, $location, userServices) {
     //Redirect to Student Dashboard if its Student looged in
     if ($rootScope.userInfo.role == 'student') {
-        $location.path('/');
+        $location.path('');
         return;
     }
     //Get all students records
@@ -273,7 +274,7 @@ function QuizCtrl($rootScope, $scope, $routeParams, $location, playerServices) {
 
     //Redirect to Student Dashboard if Wrong Quiz ID else Initialize the quiz as well
     if (!playerServices.setQuiz($routeParams.quizId, studentid)) {
-        $location.path('/');
+        $location.path('');
         return;
     }
 
@@ -282,7 +283,7 @@ function QuizCtrl($rootScope, $scope, $routeParams, $location, playerServices) {
 
     // if already attempted, redirect to first question page. No need to show welcome page
     if (!$.isEmptyObject($scope.quizDataObj.resultArr)) {
-        $location.path('/question/' + q);
+        $location.path('question/' + q);
         return;
     }
 
@@ -303,7 +304,7 @@ function ResultCtrl($rootScope, $scope, $location, playerServices) {
 
     //Redirect to Student Dashboard if quiz is not initialized
     if (!playerServices.checkQuizIniate()) {
-        $location.path('/');
+        $location.path('');
         return;
     }
 
@@ -333,7 +334,7 @@ function QuestionCtrl($rootScope, $scope, $routeParams, $location, playerService
 
     //Redirect to Student Dashboard if Wrong Questtion ID or quiz is not initialized
     if (!playerServices.checkQuizIniate() || !playerServices.showQuestion(qId)) {
-        $location.path('/');
+        $location.path('');
         return;
     }
 
@@ -403,7 +404,7 @@ function QuestionCtrl($rootScope, $scope, $routeParams, $location, playerService
         });
 
         modalInstance.result.then(function (selectedItem) {
-            $location.path('/result');
+            $location.path('result');
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });
