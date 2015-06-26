@@ -127,3 +127,53 @@ span.error{
     color: #ff0000;
 }
 
+.table-responsive-styles{
+    background: #fff;
+    width:100%;
+    height: 600px;
+    overflow: auto;
+    
+}
+
+#background {
+    background: url(../images/loadingfiles2.gif) no-repeat center #fff;
+    position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   z-index: -1;
+  min-height:350px;
+  color: #D71B32;
+  font-size: 35px;
+  padding: 30px 0 0 0;
+  text-align: center;
+}
+.bgheading {
+    background: #fff;
+    color: #000; font-size: 13px;
+}
+th.rotate {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+}
+
+th.rotate > div {
+  transform: 
+    rotate(-90deg);
+  width: 40px;
+}
+th.rotate > div > span {
+  
+  padding: 5px 10px;
+}
+.bgPurple {
+    background: rgb(242,220,219);
+    }
+.bgPurple td, .bgYellow td, td.bgPurple, td.bgYellow, th.bgPurple,  th.bgYellow{
+    border: 1px solid #000 !important;
+}
+.bgYellow {
+    background: rgb(255,255,204);
+}

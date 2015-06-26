@@ -101,30 +101,33 @@ primeDigitalApp.config(['$routeProvider',
 /**
  *  
  */
-primeDigitalApp.run(['$rootScope', '$location', '$http','userServices',
+primeDigitalApp.run(['$rootScope', '$location', '$http', 'userServices',
     function ($rootScope, $location, $http, userServices) {
-        
+
         $rootScope.userInfo = userServices.getUser();
-        
+
         // keep user logged in after page refresh
         if ($rootScope.userInfo) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.userInfo.authToken; // jshint ignore:line
         }
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
-            var requireLogin = next.data.requireLogin;
+            var requireLogin = false;
+            if (next['data']) {
+                requireLogin = next.data.requireLogin
+            }
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
-            
+
             var loggedIn = $rootScope.userInfo;
             if (!loggedIn && requireLogin) {
-                $rootScope.flashMessage = { "text": "Please login ", "type": "danger"};
-                $location.path('/login');
-            }else if(!restrictedPage && loggedIn){
-                if($rootScope.userInfo.role == 'teacher'){
-                    $location.path('/dashboard');
-                }else{
-                    $location.path('/');
+                $rootScope.flashMessage = {"text": "Please login ", "type": "danger"};
+                $location.path('login');
+            } else if (!restrictedPage && loggedIn) {
+                if ($rootScope.userInfo.role == 'teacher') {
+                    $location.path('dashboard');
+                } else {
+                    $location.path('');
                 }
             }
         });

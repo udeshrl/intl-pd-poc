@@ -2,8 +2,35 @@
     <strong>ClassName</strong> Class Report 
 </div>
 
-<div class="panel-group">
-    
+<div class="view-container">
+    <div id="background" ng-show="loading">
+        Hold on! Report is in process...
+    </div>  
+
+
+    <div class="table-responsive table-responsive-styles" ng-show="!loading">
+        <table class="table table-bordered">
+            <thead>
+            <tr class="bgheading">
+            <th width="250" class="bgPurple"></th>
+            <th width="100" class="bgPurple"></th>
+            <th class="rotate"  ng-repeat="student in classStudents"><div><span>{{student.first_name}}</span></div></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="topic in reportData">
+                    <td class="bgPurple">{{topic.name}}</td>
+                    <td class="bgPurple">ACM{{topic.code}}</td>
+                    <td ng-repeat="student in classStudents" ng-init="sId = student.id">
+                        <span ng-if="topic.students[sId]">{{topic.students[sId].correct / topic.students[sId].total*100 | setDecimal }}%</span>
+                    </td>
+                </tr>
+               
+            </tbody>
+
+        </table>
+    </div>
+
 </div>
 <style>
     #author_content_container{display:none;}

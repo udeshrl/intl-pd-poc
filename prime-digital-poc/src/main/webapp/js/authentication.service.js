@@ -37,6 +37,11 @@
                         }
                         callback(response);
                     });
+                    
+//                    $http.post('/api/authenticate', { username: username, password: password })
+//                .success(function (response) {
+//                    callback(response);
+//                });
 
         }
 
