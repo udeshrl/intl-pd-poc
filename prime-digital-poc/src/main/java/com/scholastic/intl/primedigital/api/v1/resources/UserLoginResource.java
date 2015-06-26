@@ -26,7 +26,7 @@ public class UserLoginResource {
 		try {
 			User user = userLoginService.findUser(userVo.getUser_name());
 			if (user != null) {
-				usrVo.setStudentId(user.getId());
+				usrVo.setId(user.getId());
 				usrVo.setUser_name(user.getUserName());
 				//usrVo.setPassword(user.getPassword());
 				usrVo.setFristName(user.getFirst_name());

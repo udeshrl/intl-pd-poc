@@ -21,9 +21,9 @@ public class UserVo {
 	@JsonProperty("password")
 	private String password;
 	
-	@XmlElement(name="studentID")
-	@JsonProperty("studentID")
-	private Integer studentId;
+	@XmlElement(name="id")
+	@JsonProperty("id")
+	private Integer id;
 	
 	@XmlElement(name="fristName")
 	@JsonProperty("fristName")
@@ -91,13 +91,15 @@ public class UserVo {
 		this.email = email;
 	}
 
-	public Integer getStudentId() {
-		return studentId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setStudentId(Integer studentId) {
-		this.studentId = studentId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
+
+
 	
 	
 	
