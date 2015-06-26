@@ -2,6 +2,7 @@ package com.scholastic.intl.primedigital.api.v1.resources;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -23,9 +24,10 @@ public class UserLoginResource {
 	public  UserVo userAuthentication (UserVo userVo) {
 		UserVo usrVo = new UserVo();	
 		try {
-			User user = userLoginService.findUser(usrVo.getUserName());
+			User user = userLoginService.findUser(userVo.getUser_name());
 			if (user != null) {
-				usrVo.setUserName(user.getUserName());
+				usrVo.setStudentId(user.getId());
+				usrVo.setUser_name(user.getUserName());
 				//usrVo.setPassword(user.getPassword());
 				usrVo.setFristName(user.getFirst_name());
 				usrVo.setLastName(user.getLast_name());

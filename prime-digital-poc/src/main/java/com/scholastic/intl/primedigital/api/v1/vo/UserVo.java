@@ -13,13 +13,17 @@ import com.scholastic.intl.api.primedigital.constants.PrimeDigitalConstants;
 @XmlRootElement(name = PrimeDigitalConstants.USER)
 public class UserVo {
 	
-	@XmlElement(name="userName")
-	@JsonProperty("userName")
-	private String userName;
+	@XmlElement(name="user_name")
+	@JsonProperty("user_name")
+	private String user_name;
 	
 	@XmlElement(name="password")
 	@JsonProperty("password")
 	private String password;
+	
+	@XmlElement(name="studentID")
+	@JsonProperty("studentID")
+	private Integer studentId;
 	
 	@XmlElement(name="fristName")
 	@JsonProperty("fristName")
@@ -37,12 +41,14 @@ public class UserVo {
 	@JsonProperty("email")
 	private String email;
 
-	public String getUserName() {
-		return userName;
+	
+
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public String getPassword() {
@@ -83,6 +89,14 @@ public class UserVo {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
 	}
 	
 	
